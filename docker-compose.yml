@@ -1,0 +1,118 @@
+version: "3.6"
+
+services:
+    #========================================================================================
+    # Cookbook database.
+    #========================================================================================
+
+    cookbook-database:
+        container_name: cookbook-database
+
+        image: mysql:5.7
+
+        restart: unless-stopped
+
+        ports:
+            - 3306:3306/tcp
+
+        networks:
+            - ${COOKBOOK_NETWORK}
+
+        secrets:
+            - source: DATABASE_KEY
+              target: "${SECRET_CONTAINER_PATH}${DATABASE_KEY_FILE}"
+
+        command:
+            - --character-set-server=utf8mb4
+            - --collation-server=utf8mb4_unicode_ci
+            - --skip-character-set-client-handshake
+
+        environment:
+            MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+            MYSQL_USER: "${DATABASE_USER}"
+            MYSQL_PASSWORD_FILE: "${SECRET_CONTAINER_PATH}${DATABASE_KEY_FILE}"
+            MYSQL_DATABASE: "${DATABASE_NAME}"
+
+    #========================================================================================
+    # Cookbook backend.
+    #========================================================================================
+
+    cookbook-backend:
+        container_name: cookbook-backend
+
+        image: node:14
+
+        restart: unless-stopped
+
+        depends_on:
+            - cookbook-database
+
+        ports:
+            - 8080:8080/tcp
+
+        networks:
+            - ${COOKBOOK_NETWORK}
+
+        volumes:
+            - ./api:/api
+
+        secrets:
+            - source: DATABASE_KEY
+              target: "${SECRET_CONTAINER_PATH}${DATABASE_KEY_FILE}"
+
+            - source: NUTRITIONIX_API_KEY
+              target: "${SECRET_CONTAINER_PATH}${NUTRITIONIX_API_KEY_FILE}"
+
+            - source: NUTRITIONIX_ID_KEY
+              target: "${SECRET_CONTAINER_PATH}${NUTRITIONIX_ID_KEY_FILE}"
+
+            - source: SPOONACULAR_API_KEY
+              target: "${SECRET_CONTAINER_PATH}${SPOONACULAR_API_KEY_FILE}"
+
+        environment:
+            # Database settings.
+            DATABASE_HOST: "${DATABASE_HOST}"
+            DATABASE_PORT: "${DATABASE_PORT}"
+            DATABASE_USER: "${DATABASE_USER}"
+            DATABASE_KEY_FILE: "${DATABASE_KEY_FILE}"
+            DATABASE_NAME: "${DATABASE_NAME}"
+
+            # Backend settings.
+            BACKEND_PORT: "${BACKEND_PORT}"
+
+            # Name of the key files.
+            NUTRITIONIX_API_KEY_FILE: "${NUTRITIONIX_API_KEY_FILE}"
+            NUTRITIONIX_ID_KEY_FILE: "${NUTRITIONIX_ID_KEY_FILE}"
+            SPOONACULAR_API_KEY_FILE: "${SPOONACULAR_API_KEY_FILE}"
+
+            # Path of the key files in container.
+            SECRET_CONTAINER_PATH: "${SECRET_CONTAINER_PATH}"
+
+        working_dir: /api
+
+        entrypoint: sh ./startup.sh
+
+#========================================================================================
+# Docker secrets.
+#========================================================================================
+
+secrets:
+    DATABASE_KEY:
+        file: "${SECRET_HOST_PATH}${DATABASE_KEY_FILE}"
+
+    NUTRITIONIX_API_KEY:
+        file: "${SECRET_HOST_PATH}${NUTRITIONIX_API_KEY_FILE}"
+
+    NUTRITIONIX_ID_KEY:
+        file: "${SECRET_HOST_PATH}${NUTRITIONIX_ID_KEY_FILE}"
+
+    SPOONACULAR_API_KEY:
+        file: "${SECRET_HOST_PATH}${SPOONACULAR_API_KEY_FILE}"
+
+#========================================================================================
+# Network configuration.
+#========================================================================================
+
+networks:
+    cookbook:
+        name: "${COOKBOOK_NETWORK}"

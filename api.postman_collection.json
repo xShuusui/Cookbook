@@ -1,0 +1,449 @@
+{
+	"info": {
+		"_postman_id": "cd681a48-201b-46ad-9bd6-ca369a6af2da",
+		"name": "Cookbook API",
+		"description": "This collection contains all routes of my Cookbook API for manually testing.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Recipe routes",
+			"item": [
+				{
+					"name": "getRecipes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/recipe",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"recipe"
+							]
+						},
+						"description": "Get all recipes with their ingredients."
+					},
+					"response": []
+				},
+				{
+					"name": "createRecipe",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Pasta\",\n    \"instructions\": \"Add a recipe.\",\n    \"rating\": 4\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/recipe",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"recipe"
+							]
+						},
+						"description": "Create a recipe."
+					},
+					"response": []
+				},
+				{
+					"name": "getRecipe",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/recipe/62ceb627-ca1b-4bb1-a41a-561ecb54ce64",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"recipe",
+								"62ceb627-ca1b-4bb1-a41a-561ecb54ce64"
+							]
+						},
+						"description": "Get a single recipe with its ingredients."
+					},
+					"response": []
+				},
+				{
+					"name": "patchRecipe",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Recipe-1\",\n    \"instructions\": \"Patched.\",\n    \"rating\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/recipe/62ceb627-ca1b-4bb1-a41a-561ecb54ce64",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"recipe",
+								"62ceb627-ca1b-4bb1-a41a-561ecb54ce64"
+							]
+						},
+						"description": "Update a recipe."
+					},
+					"response": []
+				},
+				{
+					"name": "deleteRecipe",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/recipe/fc0520c5-7a11-4f96-babf-8a966d96db18",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"recipe",
+								"fc0520c5-7a11-4f96-babf-8a966d96db18"
+							]
+						},
+						"description": "Delete a recipe."
+					},
+					"response": []
+				}
+			],
+			"description": "This folder contains all recipe routes.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ff66939f-7e94-400f-a33a-b4f269ced2b6",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "790ad95d-162b-4061-a7bc-3e524a6993b9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Ingredient routes",
+			"item": [
+				{
+					"name": "getIngredients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/ingredient",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"ingredient"
+							]
+						},
+						"description": "Get all ingredients."
+					},
+					"response": []
+				},
+				{
+					"name": "createIngredient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Rice\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/ingredient",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"ingredient"
+							]
+						},
+						"description": "Create an ingredient."
+					},
+					"response": []
+				},
+				{
+					"name": "getIngredient",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/ingredient/a08fa7b3-bc23-4e2d-aaa0-65dc858e38c1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"ingredient",
+								"a08fa7b3-bc23-4e2d-aaa0-65dc858e38c1"
+							]
+						},
+						"description": "Get a single ingredient."
+					},
+					"response": []
+				},
+				{
+					"name": "patchIngredient",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Rice\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/ingredient/ea4c7aa6-093a-4b1f-9628-3c032b4314b9",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"ingredient",
+								"ea4c7aa6-093a-4b1f-9628-3c032b4314b9"
+							]
+						},
+						"description": "Update an ingredient."
+					},
+					"response": []
+				},
+				{
+					"name": "deleteIngredient",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/ingredient/ea4c7aa6-093a-4b1f-9628-3c032b4314b9",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"ingredient",
+								"ea4c7aa6-093a-4b1f-9628-3c032b4314b9"
+							]
+						},
+						"description": "Delete an ingredient."
+					},
+					"response": []
+				}
+			],
+			"description": "This folder contains all ingredient routes.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "123f072a-0c57-4c07-a820-0d685d880a36",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "61638276-cf9d-4aee-874b-f3fcd8d62715",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "RecipeIngredient routes",
+			"item": [
+				{
+					"name": "addIngredientToRecipe",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"amount\": 2,\n\t\"unit\": \"kg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/recipe/62ceb627-ca1b-4bb1-a41a-561ecb54ce64/ingredient/d1e074ec-6811-4660-b70a-6f031c36aad5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"recipe",
+								"62ceb627-ca1b-4bb1-a41a-561ecb54ce64",
+								"ingredient",
+								"d1e074ec-6811-4660-b70a-6f031c36aad5"
+							]
+						},
+						"description": "Add an ingredient to a recipe."
+					},
+					"response": []
+				},
+				{
+					"name": "patchIngredientFromRecipe",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"amount\": 500,\n\t\"unit\": \"g\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/recipe/62ceb627-ca1b-4bb1-a41a-561ecb54ce64/ingredient/d1e074ec-6811-4660-b70a-6f031c36aad5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"recipe",
+								"62ceb627-ca1b-4bb1-a41a-561ecb54ce64",
+								"ingredient",
+								"d1e074ec-6811-4660-b70a-6f031c36aad5"
+							]
+						},
+						"description": "Update an ingredient from a recipe."
+					},
+					"response": []
+				},
+				{
+					"name": "removeIngredientFromRecipe",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/recipe/62ceb627-ca1b-4bb1-a41a-561ecb54ce64/ingredient/dd19f2ad-35f6-480b-b7ca-1e3598426aa3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"recipe",
+								"62ceb627-ca1b-4bb1-a41a-561ecb54ce64",
+								"ingredient",
+								"dd19f2ad-35f6-480b-b7ca-1e3598426aa3"
+							]
+						},
+						"description": "Remove an ingredient from a recipe."
+					},
+					"response": []
+				}
+			],
+			"description": "This folder contains all recipeIngredient routes.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0294bb1b-6ef1-4e23-9deb-ca6dfbda08cb",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "99affdae-f43d-47e2-9ca2-5d8e4314dd0e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "51b61df6-ff9a-4cd5-975d-49ee2f3a8299",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9ed8fd14-a1d4-4bd0-8879-919e2b999159",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

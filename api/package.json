@@ -1,0 +1,33 @@
+{
+    "name": "cookbook-api",
+    "version": "1.0.0",
+    "description": "The Cookbook REST API for the first homework of the advanced web development lecture.",
+    "author": "Julian Segeth",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://code.fbi.h-da.de/istjusege/fwe-ss20-755304-ha1.git"
+    },
+    "main": "./dist/server.js",
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc --sourceMap -w &",
+        "server": "node ./dist/server.js",
+        "development:start": "npm run watch && nodemon --legacy-watch ./dist/server.js"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.6",
+        "@types/node": "^13.13.4",
+        "@types/node-fetch": "^2.5.7",
+        "nodemon": "^2.0.3",
+        "typescript": "^3.8.3"
+    },
+    "dependencies": {
+        "class-validator": "^0.12.2",
+        "express": "^4.17.1",
+        "mysql2": "^2.1.0",
+        "node-fetch": "^2.6.0",
+        "reflect-metadata": "^0.1.13",
+        "typeorm": "^0.2.24"
+    }
+}
