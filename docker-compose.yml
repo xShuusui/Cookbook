@@ -92,6 +92,35 @@ services:
 
         entrypoint: sh ./startup.sh
 
+    #========================================================================================
+    # Cookbook frontend.
+    #========================================================================================
+
+    cookbook-frontend:
+        container_name: cookbook-frontend
+
+        image: node:14
+
+        restart: unless-stopped
+
+        depends_on:
+            - cookbook-backend
+
+        ports:
+            - 3000:3000/tcp
+
+        networks:
+            - ${COOKBOOK_NETWORK}
+
+        volumes:
+            - ./app:/app
+
+        #environment:
+
+        working_dir: /app
+
+        entrypoint: sh ./startup.sh
+
 #========================================================================================
 # Docker secrets.
 #========================================================================================
