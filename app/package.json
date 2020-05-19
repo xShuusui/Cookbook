@@ -1,13 +1,40 @@
 {
-    "name": "cookbook-app",
-    "version": "1.0.0",
-    "description": "The Cookbook application for the second homework of the advanced web development lecture.",
-    "author": "Julian Segeth",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://code.fbi.h-da.de/istjusege/fwe-ss20-755304-ha2.git"
-    },
-    "main": "index.js",
-    "scripts": {}
+  "name": "cookbook-app",
+  "version": "1.0.0",
+  "description": "The Cookbook application for the second homework of the advanced web development lecture.",
+  "author": "Julian Segeth",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://code.fbi.h-da.de/istjusege/fwe-ss20-755304-ha2.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "react-scripts build",
+    "start": "react-scripts start",
+    "test": "react-scripts test"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "typescript": "^3.9.2"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1",
+    "styled-components": "^5.1.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
