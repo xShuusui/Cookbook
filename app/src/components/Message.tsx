@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Message.module.css";
+import styled, { css } from "styled-components";
 
 export enum MessageType {
     INFO = "info",
@@ -11,9 +11,22 @@ interface IMessage {
     type?: MessageType;
 }
 
-export const Message: React.FC<IMessage> = ({
-    children,
-    type = MessageType.NONE,
-}) => {
-    return <div className={`message ${styles[type]}`}>{children}</div>;
-};
+export const StyledMessage = styled.div<IMessage>`
+    color: ${(props) => {
+        switch (props.type) {
+            case MessageType.INFO:
+                return "blue";
+            case MessageType.ERROR:
+                return "red";
+            default:
+                return "black";
+        }
+    }};
+`;
+
+// export const Message: React.FC<IMessage> = ({
+//     children,
+//     type = MessageType.NONE,
+// }) => {
+//     return <StyledMessage className={type}>{children}</StyledMessage>;
+// };

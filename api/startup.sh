@@ -2,7 +2,7 @@
 
 # Install npm packages.
 echo "[INFO] Installing required npm packages:"
-npm install
+npm install --silent
 
 # Build the application.
 echo "[INFO] Building the api."

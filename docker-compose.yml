@@ -115,7 +115,9 @@ services:
         volumes:
             - ./app:/app
 
-        #environment:
+        environment:
+            # There is a bug where react-scripts doesn't start, set CI=true solves it.
+            CI: "true"
 
         working_dir: /app
 
