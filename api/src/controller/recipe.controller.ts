@@ -22,6 +22,8 @@ export class RecipeController {
                 name: sortBy === "name" ? "ASC" : undefined,
                 rating: sortBy === "rating" ? "DESC" : undefined,
                 createdAt: sortBy === "newest" ? "DESC" : undefined,
+                totalCalories: sortBy === "calories" ? "DESC" : undefined,
+                totalFat: sortBy === "fat" ? "DESC" : undefined,
             },
         });
         res.send({ message: "Get recipes successfully.", data: recipes });

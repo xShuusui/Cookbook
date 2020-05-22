@@ -90,14 +90,30 @@ export class RecipeIngredientController {
             }
             recipe.ingredients.push(recipeIngredient);
 
+            // Save recipeIngredient.
+            await recipeRepository.save(recipe);
+
+            // Count calories and fat.
+            const { totalCalories, totalFat } = await getRepository(
+                RecipeIngredient
+            )
+                .createQueryBuilder("rI")
+                .where("rI.recipeId=:recipeId", { recipeId: recipe.recipeId })
+                .select("SUM(rI.calories)", "totalCalories")
+                .addSelect("SUM(rI.fat)", "totalFat")
+                .getRawOne();
+
+            recipe.totalCalories = totalCalories === null ? 0 : totalCalories;
+            recipe.totalFat = totalFat === null ? 0 : totalFat;
+
             // Save recipeIngredient in database.
             await recipeRepository.save(recipe);
-            const updatedRecipe: Recipe = await recipeRepository.findOneOrFail(
+            const u2pdatedRecipe: Recipe = await recipeRepository.findOneOrFail(
                 recipeId
             );
             res.send({
                 message: "Add ingredient to recipe successfully.",
-                data: updatedRecipe,
+                data: u2pdatedRecipe,
             });
         } catch (error) {
             res.status(404).send({
@@ -188,6 +204,30 @@ export class RecipeIngredientController {
 
             // Patch the recipeIngredient in database.
             await recipeIngredientRepository.save(recipeIngredient);
+
+            // Count calories and fat.
+            let { totalCalories, totalFat } = await getRepository(
+                RecipeIngredient
+            )
+                .createQueryBuilder("rI")
+                .where("rI.recipeId=:recipeId", { recipeId: recipe.recipeId })
+                .select("SUM(rI.calories)", "totalCalories")
+                .addSelect("SUM(rI.fat)", "totalFat")
+                .getRawOne();
+
+            totalCalories = totalCalories === null ? 0 : totalCalories;
+            totalFat = totalFat === null ? 0 : totalFat;
+
+            // Update calories and fat.
+            await recipeRepository
+                .createQueryBuilder()
+                .update("recipe")
+                .set({ totalCalories: totalCalories, totalFat: totalFat })
+                .where("recipeId=:recipeId", {
+                    recipeId: recipe.recipeId,
+                })
+                .execute();
+
             const updatedRecipe: Recipe = await recipeRepository.findOneOrFail(
                 recipe.recipeId
             );
@@ -244,7 +284,32 @@ export class RecipeIngredientController {
                 return;
             }
 
+            // Delete recipeIngredient.
             await recipeIngredientRepository.remove(recipeIngredient);
+
+            // Count calories and fat.
+            let { totalCalories, totalFat } = await getRepository(
+                RecipeIngredient
+            )
+                .createQueryBuilder("rI")
+                .where("rI.recipeId=:recipeId", { recipeId: recipe.recipeId })
+                .select("SUM(rI.calories)", "totalCalories")
+                .addSelect("SUM(rI.fat)", "totalFat")
+                .getRawOne();
+
+            totalCalories = totalCalories === null ? 0 : totalCalories;
+            totalFat = totalFat === null ? 0 : totalFat;
+
+            // Update calories and fat.
+            await recipeRepository
+                .createQueryBuilder()
+                .update("recipe")
+                .set({ totalCalories: totalCalories, totalFat: totalFat })
+                .where("recipeId=:recipeId", {
+                    recipeId: recipe.recipeId,
+                })
+                .execute();
+
             const updatedRecipe: Recipe = await recipeRepository.findOneOrFail(
                 recipe.recipeId
             );

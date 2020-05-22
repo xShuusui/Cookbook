@@ -57,6 +57,18 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                     </Button>
                     <Button
                         style={buttonStyle}
+                        onClick={() => setSortBy("calories")}
+                    >
+                        Calories
+                    </Button>
+                    <Button
+                        style={buttonStyle}
+                        onClick={() => setSortBy("fat")}
+                    >
+                        Fat
+                    </Button>
+                    <Button
+                        style={buttonStyle}
                         onClick={() => setSortBy("ingredients")}
                     >
                         Ingredients

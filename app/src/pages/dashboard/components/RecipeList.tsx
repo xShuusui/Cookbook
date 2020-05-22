@@ -9,6 +9,8 @@ export type Recipe = {
     name: string;
     instructions: string;
     rating: number;
+    totalCalories: number;
+    totalFat: number;
     ingredients: RecipeIngredient[];
     createdAt: Date;
     updatedAt: Date;
@@ -30,6 +32,8 @@ export const RecipeItem: React.FC<RecipeItemProps> = ({
         name,
         instructions,
         rating,
+        totalCalories,
+        totalFat,
         ingredients,
         createdAt,
         updatedAt,
@@ -39,13 +43,6 @@ export const RecipeItem: React.FC<RecipeItemProps> = ({
     const [redirectToRecipePage, setRedirect] = useState<boolean>(false);
     let d = new Date(createdAt);
     console.log(new Date(createdAt).toLocaleString());
-
-    let totalCalories = 0;
-    let totalFat = 0;
-    ingredients.map((recipeIngredient) => {
-        totalCalories += recipeIngredient.calories;
-        totalFat += recipeIngredient.fat;
-    });
 
     const onRatingChange = (e: number) => {
         fetch("api/recipe/" + recipeId, {

@@ -40,6 +40,14 @@ export class Recipe {
     @Column({ default: "" })
     public joke: string;
 
+    /** The total calories from the added ingredients. */
+    @Column("double", { default: 0 })
+    public totalCalories: number;
+
+    /** The total fat from the added fat. */
+    @Column("double", { default: 0 })
+    public totalFat: number;
+
     /** A creation timestamp. */
     @CreateDateColumn()
     public createdAt: string;
