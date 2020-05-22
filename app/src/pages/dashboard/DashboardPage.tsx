@@ -1,34 +1,19 @@
 import React, { useState } from "react";
 import { RecipeItem, Recipe } from "./components/RecipeList";
-import { Row, Skeleton, PageHeader, Button, Modal } from "antd";
+import { Row, Skeleton } from "antd";
 import { useGetHook } from "../../hooks/UseGetHook";
-import { PlusOutlined } from "@ant-design/icons";
+import { DashboardHeader } from "./components/DashboardHeader";
 
 export const DashboardPage: React.FC = () => {
-    const [showDashboardModal, setDashboardModal] = useState<boolean>(false);
+    const [sortBy, setSortBy] = useState<string | undefined>(undefined);
 
-    const { data, fetchData } = useGetHook<Recipe[]>("/api/recipe");
+    const { data, fetchData } = useGetHook<Recipe[]>(
+        "/api/recipe?sortBy=" + sortBy
+    );
 
     return (
         <>
-            <Modal
-                visible={showDashboardModal}
-                onCancel={() => {
-                    setDashboardModal(false);
-                }}
-            />
-            <PageHeader
-                title="Dashboard"
-                extra={
-                    <Button
-                        size="large"
-                        icon={<PlusOutlined />}
-                        onClick={() => setDashboardModal(true)}
-                    >
-                        Add Recipe
-                    </Button>
-                }
-            />
+            <DashboardHeader setSortBy={setSortBy} />
             <Row gutter={16}>
                 {data === null ? (
                     <Skeleton />

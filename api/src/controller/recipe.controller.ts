@@ -14,8 +14,16 @@ export class RecipeController {
      * @param _ The request object.
      * @param res The response object.
      */
-    public static async getRecipes(_: Request, res: Response): Promise<void> {
-        const recipes: Recipe[] = await getRepository(Recipe).find();
+    public static async getRecipes(req: Request, res: Response): Promise<void> {
+        const sortBy = req.query.sortBy;
+
+        const recipes: Recipe[] = await getRepository(Recipe).find({
+            order: {
+                rating: sortBy == "rating" ? "DESC" : undefined,
+                createdAt: sortBy == "createdAt" ? "DESC" : undefined,
+                name: sortBy == "name" ? "ASC" : undefined,
+            },
+        });
         res.send({ message: "Get recipes successfully.", data: recipes });
     }
 

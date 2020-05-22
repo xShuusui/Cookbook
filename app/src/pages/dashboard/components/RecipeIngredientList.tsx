@@ -29,7 +29,6 @@ export const RecipeIngredientItem: React.FC<RecipeIngredientItemProps> = (
     return (
         <List
             dataSource={[
-                "Ingredients",
                 args.recipeIngredient.ingredient.name +
                     " " +
                     args.recipeIngredient.amount,

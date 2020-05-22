@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { RecipeIngredientItem, RecipeIngredient } from "./RecipeIngredientList";
-import { Card, Col, Rate, List } from "antd";
-import { EditOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
+import { RecipeIngredient } from "./RecipeIngredientList";
+import { Card, Col, Rate, message } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Redirect } from "react-router";
+//import { useDeleteHook } from "../../../hooks/UseDeleteHook";
 
 export type Recipe = {
     recipeId: string;
@@ -11,24 +12,34 @@ export type Recipe = {
     rating: number;
     ingredients: RecipeIngredient[];
     createdAt: Date;
-    updatedAt?: Date;
+    updatedAt: Date;
 };
 
-export type RecipeItemProps = {
+type RecipeItemProps = {
     recipe: Recipe;
     refetch: () => void;
 };
 
 const gridStyle = {
-    width: "100%",
+    width: "50%",
+    "text-align": "center",
 };
 
-// Items.
 export const RecipeItem: React.FC<RecipeItemProps> = ({
-    recipe: { recipeId, name, instructions, rating, ingredients },
+    recipe: {
+        recipeId,
+        name,
+        instructions,
+        rating,
+        ingredients,
+        createdAt,
+        updatedAt,
+    },
     refetch,
 }) => {
     const [redirectToRecipePage, setRedirect] = useState<boolean>(false);
+    let d = new Date(createdAt);
+    console.log(new Date(createdAt).toLocaleString());
 
     const onRatingChange = (e: number) => {
         fetch("api/recipe/" + recipeId, {
@@ -44,6 +55,21 @@ export const RecipeItem: React.FC<RecipeItemProps> = ({
         });
     };
 
+    const onDeleteClick = () => {
+        //useDeleteHook("api/recipe/" + recipeId, refetch);
+        fetch("api/recipe/" + recipeId, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+        }).then((res) => {
+            if (res.status === 200) {
+                refetch();
+                message.success("Deleted successfully.");
+            } else {
+                message.error(res.status + " " + res.statusText);
+            }
+        });
+    };
+
     return (
         <>
             {redirectToRecipePage === true ? (
@@ -54,6 +80,7 @@ export const RecipeItem: React.FC<RecipeItemProps> = ({
                         title={name}
                         actions={[
                             <EditOutlined onClick={() => setRedirect(true)} />,
+                            <DeleteOutlined onClick={onDeleteClick} />,
                         ]}
                         extra={
                             <Rate
@@ -63,19 +90,19 @@ export const RecipeItem: React.FC<RecipeItemProps> = ({
                                 onChange={(e) => onRatingChange(e)}
                             ></Rate>
                         }
+                        style={{ margin: "0.5rem 0" }}
                     >
                         <Card.Grid hoverable={false} style={gridStyle}>
-                            {instructions}
+                            Calories: 3421
                         </Card.Grid>
                         <Card.Grid hoverable={false} style={gridStyle}>
-                            {ingredients.map((recipeIngredient) => (
-                                <RecipeIngredientItem
-                                    key={
-                                        recipeIngredient.ingredient.ingredientId
-                                    }
-                                    recipeIngredient={recipeIngredient}
-                                ></RecipeIngredientItem>
-                            ))}
+                            Fat: 1834
+                        </Card.Grid>
+                        <Card.Grid hoverable={false} style={gridStyle}>
+                            Created At: {new Date(createdAt).toLocaleString()}
+                        </Card.Grid>
+                        <Card.Grid hoverable={false} style={gridStyle}>
+                            Updated At: {new Date(updatedAt).toLocaleString()}
                         </Card.Grid>
                     </Card>
                 </Col>
