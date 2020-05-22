@@ -3,7 +3,6 @@ import { RecipeIngredient } from "./RecipeIngredientList";
 import { Card, Col, Rate, message } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Redirect } from "react-router";
-//import { useDeleteHook } from "../../../hooks/UseDeleteHook";
 
 export type Recipe = {
     recipeId: string;
@@ -41,6 +40,13 @@ export const RecipeItem: React.FC<RecipeItemProps> = ({
     let d = new Date(createdAt);
     console.log(new Date(createdAt).toLocaleString());
 
+    let totalCalories = 0;
+    let totalFat = 0;
+    ingredients.map((recipeIngredient) => {
+        totalCalories += recipeIngredient.calories;
+        totalFat += recipeIngredient.fat;
+    });
+
     const onRatingChange = (e: number) => {
         fetch("api/recipe/" + recipeId, {
             method: "PATCH",
@@ -56,7 +62,6 @@ export const RecipeItem: React.FC<RecipeItemProps> = ({
     };
 
     const onDeleteClick = () => {
-        //useDeleteHook("api/recipe/" + recipeId, refetch);
         fetch("api/recipe/" + recipeId, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
@@ -93,10 +98,10 @@ export const RecipeItem: React.FC<RecipeItemProps> = ({
                         style={{ margin: "0.5rem 0" }}
                     >
                         <Card.Grid hoverable={false} style={gridStyle}>
-                            Calories: 3421
+                            Calories: {totalCalories}
                         </Card.Grid>
                         <Card.Grid hoverable={false} style={gridStyle}>
-                            Fat: 1834
+                            Fat: {totalFat}
                         </Card.Grid>
                         <Card.Grid hoverable={false} style={gridStyle}>
                             Created At: {new Date(createdAt).toLocaleString()}

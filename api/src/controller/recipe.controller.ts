@@ -19,9 +19,9 @@ export class RecipeController {
 
         const recipes: Recipe[] = await getRepository(Recipe).find({
             order: {
-                rating: sortBy == "rating" ? "DESC" : undefined,
-                createdAt: sortBy == "createdAt" ? "DESC" : undefined,
-                name: sortBy == "name" ? "ASC" : undefined,
+                name: sortBy === "name" ? "ASC" : undefined,
+                rating: sortBy === "rating" ? "DESC" : undefined,
+                createdAt: sortBy === "newest" ? "DESC" : undefined,
             },
         });
         res.send({ message: "Get recipes successfully.", data: recipes });
