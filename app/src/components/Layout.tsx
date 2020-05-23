@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-export const Layout: React.FC = ({ children }) => {
+export const Layout2: React.FC = ({ children }) => {
     const headerHeight = "85px";
     const footerHeight = "50px";
 
@@ -40,16 +40,16 @@ export const Layout: React.FC = ({ children }) => {
 
     return (
         <>
-            <Header>
+            {/* <Header>
                 Header
                 <NavigationList>
                     <NavigationItem>Home</NavigationItem>
                     <NavigationItem>Recipe</NavigationItem>
                     <NavigationItem>Ingredient</NavigationItem>
                 </NavigationList>
-            </Header>
+            </Header> */}
             <Main>{children}</Main>
-            <Footer>Footer</Footer>
+            {/* <Footer>Footer</Footer> */}
         </>
     );
 };
