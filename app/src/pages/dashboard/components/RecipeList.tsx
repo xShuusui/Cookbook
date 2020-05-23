@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { RecipeIngredient } from "./RecipeIngredientList";
-import { Card, Col, Rate, message } from "antd";
+import React, { useState } from "react";
+import { Card, Col, Rate } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Redirect } from "react-router";
+import { deleteFetch } from "../../../components/DeleteFetch";
+import { patchRecipeFetch } from "../../../components/PatchFetch";
 
 export type Recipe = {
     recipeId: string;
@@ -11,19 +12,18 @@ export type Recipe = {
     rating: number;
     totalCalories: number;
     totalFat: number;
-    ingredients: RecipeIngredient[];
     createdAt: Date;
     updatedAt: Date;
-};
-
-type RecipeItemProps = {
-    recipe: Recipe;
-    refetch: () => void;
 };
 
 const gridStyle = {
     width: "50%",
     "text-align": "center",
+};
+
+type RecipeItemProps = {
+    recipe: Recipe;
+    refetch: () => void;
 };
 
 export const RecipeItem: React.FC<RecipeItemProps> = ({
@@ -34,42 +34,25 @@ export const RecipeItem: React.FC<RecipeItemProps> = ({
         rating,
         totalCalories,
         totalFat,
-        ingredients,
         createdAt,
         updatedAt,
     },
     refetch,
 }) => {
     const [redirectToRecipePage, setRedirect] = useState<boolean>(false);
-    let d = new Date(createdAt);
-    console.log(new Date(createdAt).toLocaleString());
 
     const onRatingChange = (e: number) => {
-        fetch("api/recipe/" + recipeId, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                name: name,
-                instructions: instructions,
-                rating: e,
-            }),
-        }).then((res) => {
-            if (res.status === 200) refetch();
-        });
+        patchRecipeFetch(
+            "/api/recipe/" + recipeId,
+            refetch,
+            name,
+            instructions,
+            e
+        );
     };
 
     const onDeleteClick = () => {
-        fetch("api/recipe/" + recipeId, {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-        }).then((res) => {
-            if (res.status === 200) {
-                refetch();
-                message.success("Deleted successfully.");
-            } else {
-                message.error(res.status + " " + res.statusText);
-            }
-        });
+        deleteFetch("/api/recipe/" + recipeId, refetch);
     };
 
     return (
