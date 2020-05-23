@@ -15,9 +15,10 @@ export class RecipeController {
      * @param res The response object.
      */
     public static async getRecipes(req: Request, res: Response): Promise<void> {
-        const sortBy = req.query.sortBy;
+        const sortBy: string = req.query.sortBy.toString();
+        const filterBy: string = req.query.filterBy.toString();
 
-        const recipes: Recipe[] = await getRepository(Recipe).find({
+        let recipes: Recipe[] = await getRepository(Recipe).find({
             order: {
                 name: sortBy === "name" ? "ASC" : undefined,
                 rating: sortBy === "rating" ? "DESC" : undefined,
@@ -26,6 +27,20 @@ export class RecipeController {
                 totalFat: sortBy === "fat" ? "DESC" : undefined,
             },
         });
+
+        if (filterBy) {
+            recipes = recipes.filter((recipe) => {
+                return (
+                    recipe.ingredients.filter((rI) => {
+                        return (
+                            rI.ingredient.name.toUpperCase() ===
+                            filterBy.toUpperCase()
+                        );
+                    }).length > 0
+                );
+            });
+        }
+
         res.send({ message: "Get recipes successfully.", data: recipes });
     }
 

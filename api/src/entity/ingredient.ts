@@ -19,7 +19,7 @@ export class Ingredient {
     public ingredientId: string;
 
     /** The name of the ingredient. */
-    @Column()
+    @Column({ unique: true })
     @IsString({ message: "The name must be a string." })
     @IsNotEmpty({ message: "The name cannot be empty." })
     public name: string;

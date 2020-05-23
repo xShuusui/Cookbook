@@ -39,10 +39,20 @@ export class IngredientController {
         req: Request,
         res: Response
     ): Promise<void> {
-        const { name } = req.body;
+        const name: string = req.body.name;
+
+        // Check if ingredient already exist.
+        let ingredient = await getRepository(Ingredient).findOne({
+            where: [{ name: name }],
+        });
+
+        if (ingredient) {
+            res.status(400).send({ message: "Ingredient already exist." });
+            return;
+        }
 
         // Create an ingredient.
-        const ingredient: Ingredient = new Ingredient();
+        ingredient = new Ingredient();
         ingredient.name = name;
 
         // Validate the ingredient.
