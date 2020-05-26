@@ -1,12 +1,14 @@
 import { message } from "antd";
+import { useState } from "react";
 
-export const postIngredientFetch = (
+export const apiFetch = (
     url: string,
-    refetch: () => void,
-    body: {}
-): void => {
-    fetch(url, {
-        method: "POST",
+    method: string,
+    body: {},
+    refetchData: () => void
+) => {
+    const data = fetch(url, {
+        method: method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
     })
@@ -18,7 +20,10 @@ export const postIngredientFetch = (
             }
         })
         .then((json) => {
-            refetch();
+            refetchData();
             message.success(json.message);
+            return json.data;
         });
+
+    return data;
 };

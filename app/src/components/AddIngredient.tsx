@@ -1,4 +1,5 @@
-import { Select, Divider, Input } from "antd";
+import { Divider, Input } from "antd";
+import { Select } from "formik-antd";
 import { PlusOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 
@@ -7,14 +8,10 @@ import { Ingredient } from "../types/Types";
 import { postIngredientFetch } from "./PostFetch";
 
 type AddIngredientToRecipeProps = {
-    ingredientId: string;
-    setIngredientId: (ingredientId: string) => void;
-    enableInput: boolean;
+    enableInput?: boolean;
 };
 
 export const AddIngredientToRecipe: React.FC<AddIngredientToRecipeProps> = ({
-    ingredientId,
-    setIngredientId,
     enableInput,
 }) => {
     const [ingredientName, setIngredientName] = useState<string>("");
@@ -25,8 +22,8 @@ export const AddIngredientToRecipe: React.FC<AddIngredientToRecipeProps> = ({
     return (
         <>
             <Select
-                onSelect={(e: string) => setIngredientId(e)}
-                disabled={enableInput ? false : true}
+                name="ingredientId"
+                disabled={!enableInput ? false : true}
                 placeholder="Select ingredient"
                 style={{ width: "20rem" }}
                 dropdownRender={(menu) => {

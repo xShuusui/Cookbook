@@ -68,8 +68,8 @@ export const AddIngredient: React.FC<AddIngredientProps> = ({
         >
             <Form.Item label="Ingredient" name="ingredientId">
                 <AddIngredientToRecipe
-                    ingredientId={ingredientId}
-                    setIngredientId={setIngredientId}
+                    // ingredientId={ingredientId}
+                    // setIngredientId={setIngredientId}
                     enableInput={true}
                 />
             </Form.Item>

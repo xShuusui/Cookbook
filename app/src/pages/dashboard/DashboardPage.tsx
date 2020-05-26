@@ -6,28 +6,48 @@ import { DashboardModal } from "./components/DashboardModal";
 import { DashboardCard } from "./components/DashboardCard";
 import { useGetHook } from "../../hooks/UseGetHook";
 import { Recipe } from "../../types/Types";
+import { RecipeModal } from "./components/RecipeModal";
+import { IngredientModal } from "./components/IngredientModal";
 
 export const DashboardPage: React.FC = () => {
     const [sortBy, setSortBy] = useState<string | undefined>(undefined);
     const [filterBy, setFilterBy] = useState<string>("");
-    const [showModal, setShowModal] = useState<boolean>(false);
+
+    const [showRecipeModal, setShowRecipeModal] = useState<boolean>(false);
+    const [showIngredientModal, setShowIngredientModal] = useState<boolean>(
+        false
+    );
+    const [recipeId, setRecipeId] = useState<string>("");
 
     const { data, fetchData } = useGetHook<Recipe[]>(
         "/api/recipe?sortBy=" + sortBy + "&filterBy=" + filterBy
     );
 
+    //     <DashboardModal
+    //     showModal={showModal}
+    //     setShowModal={setShowModal}
+    //     refetch={fetchData}
+    // />
     return (
         <>
-            <DashboardModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                refetch={fetchData}
+            <RecipeModal
+                showRecipeModal={showRecipeModal}
+                setShowRecipeModal={setShowRecipeModal}
+                setShowIngredientModal={setShowIngredientModal}
+                setRecipeId={setRecipeId}
+                refetchData={fetchData}
+            />
+            <IngredientModal
+                showIngredientModal={showIngredientModal}
+                setShowIngredientModal={setShowIngredientModal}
+                recipeId={recipeId}
+                refetchData={fetchData}
             />
             <DashboardHeader
                 setSortBy={setSortBy}
                 filterBy={filterBy}
                 setFilterBy={setFilterBy}
-                setShowModal={setShowModal}
+                setShowModal={setShowRecipeModal}
             />
 
             <Row gutter={16}>

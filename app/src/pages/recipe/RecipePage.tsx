@@ -136,8 +136,8 @@ export const RecipePage: React.FC<{ recipeId: string }> = ({ recipeId }) => {
 
                                     <Form.Item label="Select ingredient:">
                                         <AddIngredientToRecipe
-                                            ingredientId={ingredientId}
-                                            setIngredientId={setIngredientId}
+                                            // ingredientId={ingredientId}
+                                            // setIngredientId={setIngredientId}
                                             enableInput={enableInput}
                                         />
                                     </Form.Item>

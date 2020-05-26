@@ -3,12 +3,14 @@ import { message } from "antd";
 export const postIngredientFetch = (
     url: string,
     refetch: () => void,
-    body: {}
+    name: string
 ): void => {
-    fetch(url, {
+    fetch("/api/ingredient", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: JSON.stringify({
+            name: name,
+        }),
     })
         .then((res) => {
             if (res.status === 200) {

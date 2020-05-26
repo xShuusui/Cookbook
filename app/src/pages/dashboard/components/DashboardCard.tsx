@@ -8,7 +8,7 @@ import { Recipe } from "../../../types/Types";
 
 const gridStyle = {
     width: "50%",
-    "text-align": "center",
+    //"text-align": "center",
 };
 
 type DashboardCardProps = {
