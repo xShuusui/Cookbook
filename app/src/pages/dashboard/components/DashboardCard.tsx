@@ -1,36 +1,25 @@
-import React, { useState } from "react";
-import { Card, Col, Rate } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Card, Col, Rate } from "antd";
+import React, { useState } from "react";
 import { Redirect } from "react-router";
-import { deleteFetch } from "../../../components/DeleteFetch";
-import { patchRecipeFetch } from "../../../components/PatchFetch";
 
-export type Recipe = {
-    recipeId: string;
-    name: string;
-    instructions: string;
-    rating: number;
-    totalCalories: number;
-    totalFat: number;
-    createdAt: Date;
-    updatedAt: Date;
-};
+import { deleteFetch } from "../../../components/DeleteFetch";
+import { Recipe } from "../../../types/Types";
 
 const gridStyle = {
     width: "50%",
     "text-align": "center",
 };
 
-type RecipeItemProps = {
+type DashboardCardProps = {
     recipe: Recipe;
     refetch: () => void;
 };
 
-export const RecipeItem: React.FC<RecipeItemProps> = ({
+export const DashboardCard: React.FC<DashboardCardProps> = ({
     recipe: {
         recipeId,
         name,
-        instructions,
         rating,
         totalCalories,
         totalFat,
@@ -40,16 +29,6 @@ export const RecipeItem: React.FC<RecipeItemProps> = ({
     refetch,
 }) => {
     const [redirectToRecipePage, setRedirect] = useState<boolean>(false);
-
-    const onRatingChange = (e: number) => {
-        patchRecipeFetch(
-            "/api/recipe/" + recipeId,
-            refetch,
-            name,
-            instructions,
-            e
-        );
-    };
 
     const onDeleteClick = () => {
         deleteFetch("/api/recipe/" + recipeId, refetch);
@@ -68,12 +47,7 @@ export const RecipeItem: React.FC<RecipeItemProps> = ({
                             <DeleteOutlined onClick={onDeleteClick} />,
                         ]}
                         extra={
-                            <Rate
-                                count={5}
-                                defaultValue={0}
-                                value={rating}
-                                onChange={(e) => onRatingChange(e)}
-                            ></Rate>
+                            <Rate count={5} value={rating} disabled={true} />
                         }
                         style={{ margin: "0.5rem 0" }}
                     >

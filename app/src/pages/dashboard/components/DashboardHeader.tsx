@@ -1,6 +1,6 @@
-import React from "react";
 import { Space, Button, PageHeader, Input, Slider } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import React from "react";
 
 const buttonStyle = {
     width: "150px",
@@ -28,7 +28,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                     icon={<PlusOutlined />}
                     onClick={() => setShowModal(true)}
                 >
-                    Add Recipe
+                    Create Recipe
                 </Button>
             }
         >

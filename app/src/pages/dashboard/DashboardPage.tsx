@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { RecipeItem, Recipe } from "./components/RecipeList";
 import { Row, Skeleton, Empty } from "antd";
-import { useGetHook } from "../../hooks/UseGetHook";
+import React, { useState } from "react";
+
 import { DashboardHeader } from "./components/DashboardHeader";
 import { DashboardModal } from "./components/DashboardModal";
+import { DashboardCard } from "./components/DashboardCard";
+import { useGetHook } from "../../hooks/UseGetHook";
+import { Recipe } from "../../types/Types";
 
 export const DashboardPage: React.FC = () => {
     const [sortBy, setSortBy] = useState<string | undefined>(undefined);
@@ -27,6 +29,7 @@ export const DashboardPage: React.FC = () => {
                 setFilterBy={setFilterBy}
                 setShowModal={setShowModal}
             />
+
             <Row gutter={16}>
                 {data === null ? (
                     <Skeleton />
@@ -37,11 +40,11 @@ export const DashboardPage: React.FC = () => {
                     />
                 ) : (
                     data.map((recipe) => (
-                        <RecipeItem
+                        <DashboardCard
                             key={recipe.recipeId}
                             recipe={recipe}
                             refetch={fetchData}
-                        ></RecipeItem>
+                        ></DashboardCard>
                     ))
                 )}
             </Row>
