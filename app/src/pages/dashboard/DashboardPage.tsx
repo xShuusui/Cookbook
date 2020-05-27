@@ -49,7 +49,7 @@ export const DashboardPage: React.FC = () => {
             ) : data.length === 0 ? (
                 <Empty description="No recipes found!" />
             ) : (
-                <Row gutter={16}>
+                <Row gutter={[16, 16]}>
                     {data.map((recipe) => (
                         <Col span={8} key={recipe.recipeId}>
                             <RecipeCard

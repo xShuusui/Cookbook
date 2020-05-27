@@ -6,6 +6,7 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { RecipePage } from "./pages/recipe/RecipePage";
 import { Menu, Layout } from "antd";
 import { IngredientPage } from "./pages/ingredient/IngredientPage";
+import { RecipeContextProvider } from "./contexts/RecipeContext";
 
 export const App: React.FC = () => {
     return (
@@ -46,11 +47,13 @@ export const App: React.FC = () => {
                                 <Route path="/recipe/:recipeId">
                                     {(props) => {
                                         return (
-                                            <RecipePage
+                                            <RecipeContextProvider
                                                 recipeId={
                                                     props.match?.params.recipeId
                                                 }
-                                            />
+                                            >
+                                                <RecipePage />
+                                            </RecipeContextProvider>
                                         );
                                     }}
                                 </Route>

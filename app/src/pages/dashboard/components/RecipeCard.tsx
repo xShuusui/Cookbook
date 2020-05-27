@@ -31,7 +31,6 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
             ) : (
                 <Card
                     title={name}
-                    style={{ margin: "0.5rem 0" }}
                     extra={<Rate count={5} value={rating} disabled={true} />}
                     actions={[
                         <EditOutlined onClick={() => setRedirect(true)} />,

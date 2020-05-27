@@ -74,7 +74,7 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({
                             <Input name={"name"} />
                         </Form.Item>
                         <Form.Item
-                            label={"Instructions:"}
+                            label={"Cooking instructions:"}
                             name={"instructions"}
                         >
                             <Input.TextArea

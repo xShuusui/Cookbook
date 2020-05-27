@@ -9,6 +9,7 @@ type RecipeHeaderProps = {
 export const RecipeHeader: React.FC<RecipeHeaderProps> = ({ setRedirect }) => {
     return (
         <PageHeader
+            style={{ width: "80rem" }}
             title={"Recipe"}
             onBack={() => setRedirect(true)}
             backIcon={

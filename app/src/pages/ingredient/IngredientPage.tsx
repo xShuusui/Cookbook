@@ -47,7 +47,7 @@ export const IngredientPage: React.FC = () => {
             ) : data.length === 0 ? (
                 <Empty description={"No ingredients found!"} />
             ) : (
-                <Row gutter={16}>
+                <Row gutter={[16, 16]}>
                     {data.map((ingredient) => (
                         <Col span={8} key={ingredient.ingredientId}>
                             <IngredientCard

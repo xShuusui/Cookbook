@@ -20,7 +20,6 @@ export const IngredientCard: React.FC<IngredientCardProps> = ({
     return (
         <Card
             title={name}
-            style={{ margin: "0.5rem 0" }}
             extra={
                 <Button
                     icon={<EditOutlined />}
