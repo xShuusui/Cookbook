@@ -1,33 +1,27 @@
-import { Row, Skeleton, Empty } from "antd";
 import React, { useState } from "react";
+import { Row, Skeleton, Empty, Col } from "antd";
 
 import { DashboardHeader } from "./components/DashboardHeader";
-import { DashboardModal } from "./components/DashboardModal";
-import { DashboardCard } from "./components/DashboardCard";
+import { IngredientModal } from "./components/IngredientModal";
+import { RecipeModal } from "./components/RecipeModal";
+import { RecipeCard } from "./components/RecipeCard";
+
 import { useGetHook } from "../../hooks/UseGetHook";
 import { Recipe } from "../../types/Types";
-import { RecipeModal } from "./components/RecipeModal";
-import { IngredientModal } from "./components/IngredientModal";
 
 export const DashboardPage: React.FC = () => {
-    const [sortBy, setSortBy] = useState<string | undefined>(undefined);
-    const [filterBy, setFilterBy] = useState<string>("");
-
     const [showRecipeModal, setShowRecipeModal] = useState<boolean>(false);
     const [showIngredientModal, setShowIngredientModal] = useState<boolean>(
         false
     );
     const [recipeId, setRecipeId] = useState<string>("");
 
+    const [sortBy, setSortBy] = useState<string | undefined>(undefined);
+    const [filterBy, setFilterBy] = useState<string>("");
     const { data, fetchData } = useGetHook<Recipe[]>(
         "/api/recipe?sortBy=" + sortBy + "&filterBy=" + filterBy
     );
 
-    //     <DashboardModal
-    //     showModal={showModal}
-    //     setShowModal={setShowModal}
-    //     refetch={fetchData}
-    // />
     return (
         <>
             <RecipeModal
@@ -50,24 +44,22 @@ export const DashboardPage: React.FC = () => {
                 setShowModal={setShowRecipeModal}
             />
 
-            <Row gutter={16}>
-                {data === null ? (
-                    <Skeleton />
-                ) : data.length === 0 ? (
-                    <Empty
-                        description="No recipes found."
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    />
-                ) : (
-                    data.map((recipe) => (
-                        <DashboardCard
-                            key={recipe.recipeId}
-                            recipe={recipe}
-                            refetch={fetchData}
-                        ></DashboardCard>
-                    ))
-                )}
-            </Row>
+            {data === null ? (
+                <Skeleton />
+            ) : data.length === 0 ? (
+                <Empty description="No recipes found!" />
+            ) : (
+                <Row gutter={16}>
+                    {data.map((recipe) => (
+                        <Col span={8} key={recipe.recipeId}>
+                            <RecipeCard
+                                recipe={recipe}
+                                refetchData={fetchData}
+                            ></RecipeCard>
+                        </Col>
+                    ))}
+                </Row>
+            )}
         </>
     );
 };

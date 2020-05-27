@@ -8,7 +8,7 @@ import { AddIngredientToRecipe } from "../../../components/AddIngredient";
 const IngredientModalSchema = Yup.object().shape({
     ingredientId: Yup.string().required("Ingredient is required."),
     amount: Yup.number()
-        .min(0, "Amount is too short!")
+        .min(1, "Amount is too short!")
         .required("Amound is required!"),
     unit: Yup.string().required("Unit is required!"),
 });
@@ -33,7 +33,6 @@ export const IngredientModal: React.FC<IngredientModalProps> = ({
             initialValues={{ ingredientId: "", amount: 0, unit: "" }}
             validationSchema={IngredientModalSchema}
             onSubmit={({ ingredientId, amount, unit }, formik) => {
-                console.log(ingredientId);
                 fetch(
                     "/api/recipe/" + recipeId + "/ingredient/" + ingredientId,
                     {
@@ -47,15 +46,16 @@ export const IngredientModal: React.FC<IngredientModalProps> = ({
                             return res.json();
                         } else {
                             message.error(res.status + " " + res.statusText);
+                            message.error(
+                                "Ingredient is already in the recipe!"
+                            );
                         }
                     })
                     .then((json) => {
                         message.success(json.message);
                         refetchData();
-
-                        formik.resetForm();
-                        console.log(json.data);
-                    });
+                    })
+                    .finally(formik.resetForm);
             }}
         >
             {(formik) => (

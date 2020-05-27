@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, message } from "antd";
-import { Formik } from "formik";
 import { Form, Input, Rate, SubmitButton } from "formik-antd";
+import { Formik } from "formik";
 import * as Yup from "yup";
 
 const RecipeModalSchema = Yup.object().shape({
@@ -50,11 +50,10 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({
                         refetchData();
 
                         setRecipeId(json.data.recipeId);
-
-                        formik.resetForm();
                         setShowRecipeModal(false);
                         setShowIngredientModal(true);
-                    });
+                    })
+                    .finally(formik.resetForm);
             }}
         >
             {(formik) => (

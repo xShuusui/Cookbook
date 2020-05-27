@@ -3,7 +3,6 @@ import { RecipeIngredient } from "../../../types/Types";
 import styled from "styled-components";
 import { Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-import { deleteFetch } from "../../../components/DeleteFetch";
 
 const RecipeIngredientItem = styled.div`
     margin: 5px;
@@ -33,13 +32,13 @@ export const IngredientItem: React.FC<IngredientItemProps> = ({
 }) => {
     const onDeleteClick = () => {
         //TODO: Delete erst bei save changes.
-        deleteFetch(
-            "/api/recipe/" +
-                recipeId +
-                "/ingredient/" +
-                ingredient.ingredientId,
-            refetch
-        );
+        // deleteFetch(
+        //     "/api/recipe/" +
+        //         recipeId +
+        //         "/ingredient/" +
+        //         ingredient.ingredientId,
+        //     refetch
+        // );
     };
 
     return (

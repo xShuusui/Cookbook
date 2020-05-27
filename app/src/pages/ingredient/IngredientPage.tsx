@@ -1,71 +1,65 @@
-import React from "react";
-import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
-import { PageHeader, Skeleton, Card, Row, Col, Button } from "antd";
+import React, { useState } from "react";
+import { PageHeader, Skeleton, Row, Col, Button, Empty } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+
+import { IngredientCard } from "./components/IngredientCard";
+import { CreateModal } from "./components/CreateModal";
+import { EditModal } from "./components/EditModal";
 import { useGetHook } from "../../hooks/UseGetHook";
 import { Ingredient } from "../../types/Types";
 
 export const IngredientPage: React.FC = () => {
+    const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
+    const [showEditModal, setShowEditModal] = useState<boolean>(false);
+
+    const [ingredientId, setIngredientId] = useState<string>("");
+
     const { data, fetchData } = useGetHook<Ingredient[]>("/api/ingredient");
 
     return (
         <>
+            <CreateModal
+                showCreateModal={showCreateModal}
+                setShowCreateModal={setShowCreateModal}
+                refetchData={fetchData}
+            />
+            <EditModal
+                showEditModal={showEditModal}
+                setShowEditModal={setShowEditModal}
+                ingredientId={ingredientId}
+                refetchData={fetchData}
+            />
             <PageHeader
                 title="Ingredients"
                 extra={
                     <Button
                         size="large"
                         icon={<PlusOutlined />}
-                        onClick={() => console.log("Create")}
+                        onClick={() => setShowCreateModal(true)}
                     >
-                        Create Ingredient
+                        Create ingredient
                     </Button>
                 }
             />
 
-            <Row gutter={16}>
-                {data === null ? (
-                    <Skeleton />
-                ) : (
-                    data.map((ingredient) => (
+            {data === null ? (
+                <Skeleton />
+            ) : data.length === 0 ? (
+                <Empty description={"No ingredients found!"} />
+            ) : (
+                <Row gutter={16}>
+                    {data.map((ingredient) => (
                         <Col span={8} key={ingredient.ingredientId}>
-                            <Card
-                                title={ingredient.name}
-                                style={{ margin: "0.5rem 0" }}
-                                extra={
-                                    <Button
-                                        icon={<EditOutlined />}
-                                        onClick={() => console.log("Edit")}
-                                    >
-                                        Edit
-                                    </Button>
-                                }
-                                actions={[
-                                    <DeleteOutlined
-                                        onClick={() => console.log("Delete")}
-                                    />,
-                                ]}
-                            >
-                                <Card.Grid
-                                    hoverable={false}
-                                    style={{ width: "50%" }}
-                                >
-                                    {new Date(
-                                        ingredient.createdAt
-                                    ).toLocaleString()}
-                                </Card.Grid>
-                                <Card.Grid
-                                    hoverable={false}
-                                    style={{ width: "50%" }}
-                                >
-                                    {new Date(
-                                        ingredient.updatedAt
-                                    ).toLocaleString()}
-                                </Card.Grid>
-                            </Card>
+                            <IngredientCard
+                                ingredient={ingredient}
+                                refetchData={fetchData}
+                                setShowEditModal={setShowEditModal}
+                                setIngredientId={setIngredientId}
+                            />
                         </Col>
-                    ))
-                )}
-            </Row>
+                    ))}
+                </Row>
+            )}
         </>
     );
 };

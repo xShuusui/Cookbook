@@ -1,10 +1,6 @@
+import React from "react";
 import { Space, Button, PageHeader, Input, Slider } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import React from "react";
-
-const buttonStyle = {
-    width: "150px",
-};
 
 type DashboardHeaderProps = {
     setSortBy: (sortBy: string) => void;
@@ -34,22 +30,34 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         >
             <Space size="small">
                 {"Sort by: "}
-                <Button style={buttonStyle} onClick={() => setSortBy("name")}>
+                <Button
+                    style={{ width: "150px" }}
+                    onClick={() => setSortBy("name")}
+                >
                     Name
                 </Button>
-                <Button style={buttonStyle} onClick={() => setSortBy("newest")}>
+                <Button
+                    style={{ width: "150px" }}
+                    onClick={() => setSortBy("newest")}
+                >
                     Newest
                 </Button>
-                <Button style={buttonStyle} onClick={() => setSortBy("rating")}>
+                <Button
+                    style={{ width: "150px" }}
+                    onClick={() => setSortBy("rating")}
+                >
                     Rating
                 </Button>
                 <Button
-                    style={buttonStyle}
+                    style={{ width: "150px" }}
                     onClick={() => setSortBy("calories")}
                 >
                     Calories
                 </Button>
-                <Button style={buttonStyle} onClick={() => setSortBy("fat")}>
+                <Button
+                    style={{ width: "150px" }}
+                    onClick={() => setSortBy("fat")}
+                >
                     Fat
                 </Button>
                 <Input
