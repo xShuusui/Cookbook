@@ -4,7 +4,7 @@ import { Form, InputNumber, Select, SubmitButton } from "formik-antd";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-import { AddIngredientToRecipe } from "../../../components/AddIngredient";
+import { IngredientSelect } from "../../../components/IngredientSelect";
 import { IngredientItem } from "./IngredientItem";
 import { RecipeContext } from "../../../contexts/RecipeContext";
 
@@ -64,6 +64,7 @@ export const IngredientForm: React.FC = () => {
                         <Card.Grid hoverable={false} style={{ width: "100%" }}>
                             {Recipe.ingredients.map((recipeIngredient) => (
                                 <IngredientItem
+                                    key={recipeIngredient.recipeIngredientId}
                                     recipeIngredient={recipeIngredient}
                                 />
                             ))}
@@ -78,8 +79,7 @@ export const IngredientForm: React.FC = () => {
                                 label={"Ingredient:"}
                                 name={"ingredientId"}
                             >
-                                {/* TODO: Schöner machen */}
-                                <AddIngredientToRecipe />
+                                <IngredientSelect />
                             </Form.Item>
                             <Form.Item label={"Amount:"} name={"amount"}>
                                 <InputNumber

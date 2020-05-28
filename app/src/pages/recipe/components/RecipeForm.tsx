@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Card, message } from "antd";
+import { EditOutlined } from "@ant-design/icons";
+import { Card, message, Button } from "antd";
 import { Form, Input, Rate, SubmitButton } from "formik-antd";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -16,6 +17,7 @@ const RecipeFormSchema = Yup.object().shape({
 });
 
 export const RecipeForm: React.FC = () => {
+    const [enableEdit, setEnableEdit] = useState<boolean>(false);
     const [name, setName] = useState<string>("");
     const [instructions, setInstructions] = useState<string>("");
     const [rating, setRating] = useState<number>(0);
@@ -57,7 +59,22 @@ export const RecipeForm: React.FC = () => {
             }}
         >
             {(formik) => (
-                <Card title={name}>
+                <Card
+                    title={name}
+                    extra={
+                        <Button
+                            size={"large"}
+                            icon={<EditOutlined />}
+                            onClick={() =>
+                                enableEdit
+                                    ? setEnableEdit(false)
+                                    : setEnableEdit(true)
+                            }
+                        >
+                            Edit
+                        </Button>
+                    }
+                >
                     <Form
                         layout={"vertical"}
                         onSubmitCapture={formik.handleSubmit}
@@ -67,6 +84,16 @@ export const RecipeForm: React.FC = () => {
                                 name={"name"}
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
+                                disabled={enableEdit ? false : true}
+                                style={
+                                    enableEdit
+                                        ? {}
+                                        : {
+                                              border: 0,
+                                              color: "black",
+                                              backgroundColor: "white",
+                                          }
+                                }
                             />
                         </Form.Item>
                         <Form.Item
@@ -83,6 +110,16 @@ export const RecipeForm: React.FC = () => {
                                 onChange={(e) =>
                                     setInstructions(e.target.value)
                                 }
+                                disabled={enableEdit ? false : true}
+                                style={
+                                    enableEdit
+                                        ? {}
+                                        : {
+                                              border: 0,
+                                              color: "black",
+                                              backgroundColor: "white",
+                                          }
+                                }
                             />
                         </Form.Item>
                         <Form.Item label={"Rating:"} name={"rating"}>
@@ -90,9 +127,17 @@ export const RecipeForm: React.FC = () => {
                                 name={"rating"}
                                 value={rating}
                                 onChange={(e) => setRating(e)}
+                                disabled={enableEdit ? false : true}
                             />
                         </Form.Item>
-                        <SubmitButton>Edit</SubmitButton>
+                        <SubmitButton
+                            disabled={enableEdit ? false : true}
+                            onClick={() =>
+                                formik.isValid ? setEnableEdit(false) : {}
+                            }
+                        >
+                            Save changes
+                        </SubmitButton>
                     </Form>
                 </Card>
             )}

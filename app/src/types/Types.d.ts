@@ -12,6 +12,7 @@ export type Recipe = {
 };
 
 export type RecipeIngredient = {
+    recipeIngredientId: string;
     amount: number;
     unit: string;
     calories: number;

@@ -1,9 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { RecipeIngredient } from "../../../types/Types";
 import styled from "styled-components";
 import { Button, message } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons";
 import { RecipeContext } from "../../../contexts/RecipeContext";
+import { Formik } from "formik";
+import { Form, InputNumber, Select, SubmitButton } from "formik-antd";
+import * as Yup from "yup";
 
 const RecipeIngredientItem = styled.div`
     margin: 5px;
@@ -12,59 +15,193 @@ const RecipeIngredientItem = styled.div`
 `;
 
 const NameSpan = styled.span`
-    flex: 2;
-`;
-const AmountUnitSpan = styled.span`
     flex: 1;
 `;
+const AmountUnitSpan = styled.span`
+    flex: 2;
+`;
+
+const ButtonSpan = styled.span`
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+`;
+
+const IngredientItemSchema = Yup.object().shape({
+    amount: Yup.number()
+        .min(0, "Amount is too short!")
+        .required("Amount is required!"),
+    unit: Yup.string().required("Unit is required!"),
+});
 
 type IngredientItemProps = {
     recipeIngredient: RecipeIngredient;
 };
 
 export const IngredientItem: React.FC<IngredientItemProps> = ({
-    recipeIngredient: { ingredient, amount, unit },
+    recipeIngredient,
 }) => {
+    const { Option } = Select;
+    const [enableEdit, setEnableEdit] = useState<boolean>(false);
+
+    const [ingredientId, setIngredientId] = useState<string>("");
+    const [amount, setAmount] = useState<number>(0);
+    const [unit, setUnit] = useState<string>("");
+
     const { Recipe, refetchData } = useContext(RecipeContext);
+
+    useEffect(() => {
+        setIngredientId(recipeIngredient.ingredient.ingredientId);
+        setAmount(recipeIngredient.amount);
+        setUnit(recipeIngredient.unit);
+    }, [recipeIngredient]);
+
+    const onEditButtonClick = () => {
+        fetch(
+            "/api/recipe/" + Recipe?.recipeId + "/ingredient/" + ingredientId,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    amount: amount,
+                    unit: unit,
+                }),
+            }
+        )
+            .then((res) => {
+                if (res.status === 200) return res.json();
+                else if (res.status === 400 || res.status === 404)
+                    res.json().then((json) => message.error(json.message));
+                else message.error(res.status + " " + res.statusText);
+            })
+            .then((json) => {
+                message.success(json.message);
+                refetchData();
+            });
+    };
 
     return (
         <RecipeIngredientItem>
-            <NameSpan>{ingredient.name}</NameSpan>
-            <AmountUnitSpan>
-                {amount} {unit}
-            </AmountUnitSpan>
-            <Button
-                style={{ flex: "1" }}
-                icon={<DeleteOutlined />}
-                onClick={() =>
-                    fetch(
-                        "/api/recipe/" +
-                            Recipe?.recipeId +
-                            "/ingredient/" +
-                            ingredient.ingredientId,
-                        {
-                            method: "DELETE",
-                            headers: { "Content-Type": "application/json" },
-                        }
-                    )
-                        .then((res) => {
-                            if (res.status === 200) {
-                                return res.json();
-                            } else {
-                                message.error(
-                                    res.status + " " + res.statusText
-                                );
-                                res.json().then((json) =>
-                                    message.error(json.message)
-                                );
-                            }
-                        })
-                        .then((json) => {
-                            message.success(json.message);
-                            refetchData();
-                        })
-                }
-            />
+            <Formik
+                initialValues={{
+                    amount: amount,
+                    unit: unit,
+                }}
+                enableReinitialize={true}
+                validationSchema={IngredientItemSchema}
+                onSubmit={() => console.log("Submit")}
+            >
+                {(formik) => (
+                    <>
+                        <NameSpan>{recipeIngredient.ingredient.name}</NameSpan>
+                        {enableEdit ? (
+                            <Form
+                                layout={"inline"}
+                                onSubmitCapture={formik.submitForm}
+                            >
+                                <Form.Item name={"amount"}>
+                                    <InputNumber
+                                        name={"amount"}
+                                        min={0}
+                                        value={amount}
+                                        onChange={(e: any) => setAmount(e)}
+                                    />
+                                </Form.Item>
+                                <Form.Item name={"unit"}>
+                                    <Select
+                                        name={"unit"}
+                                        style={{ width: "150px" }}
+                                        value={unit}
+                                        onSelect={(e: string) => setUnit(e)}
+                                    >
+                                        <Option value="g">gram</Option>
+                                        <Option value="kg">kilogram</Option>
+                                        <Option value="ml">milliliter</Option>
+                                        <Option value="l">liter</Option>
+                                        <Option value="cup">cup</Option>
+                                        <Option value="teaspoon">
+                                            teaspoon
+                                        </Option>
+                                        <Option value="tablespoon">
+                                            tablespoon
+                                        </Option>
+                                    </Select>
+                                </Form.Item>
+                                <ButtonSpan>
+                                    {enableEdit ? (
+                                        <SubmitButton
+                                            icon={<SaveOutlined />}
+                                            onClick={() =>
+                                                formik.isValid
+                                                    ? setEnableEdit(false)
+                                                    : {}
+                                            }
+                                        >
+                                            Save
+                                        </SubmitButton>
+                                    ) : (
+                                        <Button
+                                            icon={<EditOutlined />}
+                                            onClick={() => setEnableEdit(true)}
+                                        >
+                                            Edit
+                                        </Button>
+                                    )}
+
+                                    <Button
+                                        icon={<DeleteOutlined />}
+                                        onClick={() =>
+                                            fetch(
+                                                "/api/recipe/" +
+                                                    Recipe?.recipeId +
+                                                    "/ingredient/" +
+                                                    recipeIngredient.ingredient
+                                                        .ingredientId,
+                                                {
+                                                    method: "DELETE",
+                                                    headers: {
+                                                        "Content-Type":
+                                                            "application/json",
+                                                    },
+                                                }
+                                            )
+                                                .then((res) => {
+                                                    if (res.status === 200) {
+                                                        return res.json();
+                                                    } else {
+                                                        message.error(
+                                                            res.status +
+                                                                " " +
+                                                                res.statusText
+                                                        );
+                                                        res.json().then(
+                                                            (json) =>
+                                                                message.error(
+                                                                    json.message
+                                                                )
+                                                        );
+                                                    }
+                                                })
+                                                .then((json) => {
+                                                    message.success(
+                                                        json.message
+                                                    );
+                                                    refetchData();
+                                                })
+                                        }
+                                    />
+                                </ButtonSpan>
+                            </Form>
+                        ) : (
+                            <AmountUnitSpan>
+                                {amount} {unit}
+                            </AmountUnitSpan>
+                        )}
+                    </>
+                )}
+            </Formik>
         </RecipeIngredientItem>
     );
 };

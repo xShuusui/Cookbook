@@ -3,7 +3,7 @@ import { Modal, message } from "antd";
 import { Formik } from "formik";
 import { Form, SubmitButton, InputNumber, Select } from "formik-antd";
 import * as Yup from "yup";
-import { AddIngredientToRecipe } from "../../../components/AddIngredient";
+import { IngredientSelect } from "../../../components/IngredientSelect";
 
 const IngredientModalSchema = Yup.object().shape({
     ingredientId: Yup.string().required("Ingredient is required."),
@@ -73,8 +73,7 @@ export const IngredientModal: React.FC<IngredientModalProps> = ({
                         onSubmitCapture={formik.handleSubmit}
                     >
                         <Form.Item label={"Ingredient:"} name={"ingredientId"}>
-                            {/* TODO: Schöner machen */}
-                            <AddIngredientToRecipe />
+                            <IngredientSelect />
                         </Form.Item>
                         <Form.Item label={"Amount:"} name={"amount"}>
                             <InputNumber
