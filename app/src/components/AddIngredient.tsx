@@ -1,11 +1,10 @@
-import { Divider, Input } from "antd";
+import { Divider, Input, message } from "antd";
 import { Select } from "formik-antd";
 import { PlusOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 
 import { useGetHook } from "../hooks/UseGetHook";
 import { Ingredient } from "../types/Types";
-import { postIngredientFetch } from "./PostFetch";
 
 type AddIngredientToRecipeProps = {
     enableInput?: boolean;
@@ -23,7 +22,6 @@ export const AddIngredientToRecipe: React.FC<AddIngredientToRecipeProps> = ({
         <>
             <Select
                 name="ingredientId"
-                disabled={!enableInput ? false : true}
                 placeholder="Select ingredient"
                 style={{ width: "20rem" }}
                 dropdownRender={(menu) => {
@@ -52,13 +50,32 @@ export const AddIngredientToRecipe: React.FC<AddIngredientToRecipeProps> = ({
                                         display: "block",
                                         cursor: "pointer",
                                     }}
-                                    onClick={() =>
-                                        postIngredientFetch(
-                                            "/api/ingredient",
-                                            fetchData,
-                                            ingredientName
-                                        )
-                                    }
+                                    onClick={() => {
+                                        fetch("/api/ingredient", {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type":
+                                                    "application/json",
+                                            },
+                                            body: JSON.stringify({
+                                                ingredientName,
+                                            }),
+                                        })
+                                            .then((res) => {
+                                                if (res.status === 200)
+                                                    return res.json();
+                                                else
+                                                    message.error(
+                                                        res.status +
+                                                            " " +
+                                                            res.statusText
+                                                    );
+                                            })
+                                            .then((json) => {
+                                                message.success(json.message);
+                                                fetchData();
+                                            });
+                                    }}
                                 >
                                     <PlusOutlined>
                                         Create ingredient

@@ -1,10 +1,12 @@
-import React from "react";
-import { Card } from "antd";
+import React, { useState, useEffect, useContext } from "react";
+import { Card, message } from "antd";
 import { Form, Input, Rate, SubmitButton } from "formik-antd";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-const RecipePageSchema = Yup.object().shape({
+import { RecipeContext } from "../../../contexts/RecipeContext";
+
+const RecipeFormSchema = Yup.object().shape({
     name: Yup.string().required("Name is required!"),
     instructions: Yup.string().required("Instructions are required!"),
     rating: Yup.number()
@@ -13,23 +15,18 @@ const RecipePageSchema = Yup.object().shape({
         .required("Rating is required!"),
 });
 
-type RecipeFormProps = {
-    name: string;
-    setName: (name: string) => void;
-    instructions: string;
-    setInstructions: (instructions: string) => void;
-    rating: number;
-    setRating: (rating: number) => void;
-};
+export const RecipeForm: React.FC = () => {
+    const [name, setName] = useState<string>("");
+    const [instructions, setInstructions] = useState<string>("");
+    const [rating, setRating] = useState<number>(0);
 
-export const RecipeForm: React.FC<RecipeFormProps> = ({
-    name,
-    setName,
-    instructions,
-    setInstructions,
-    rating,
-    setRating,
-}) => {
+    const { Recipe } = useContext(RecipeContext);
+    useEffect(() => {
+        setName(Recipe === null ? "" : Recipe.name);
+        setInstructions(Recipe === null ? "" : Recipe.instructions);
+        setRating(Recipe === null ? 0 : Recipe.rating);
+    }, [Recipe]);
+
     return (
         <Formik
             initialValues={{
@@ -38,10 +35,25 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
                 rating: rating,
             }}
             enableReinitialize={true}
-            validationSchema={RecipePageSchema}
+            validationSchema={RecipeFormSchema}
             onSubmit={({ name, instructions, rating }, formik) => {
-                console.log(name, instructions, rating);
-                formik.resetForm();
+                fetch("/api/recipe/" + Recipe?.recipeId, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, instructions, rating }),
+                })
+                    .then((res) => {
+                        if (res.status === 200) return res.json();
+                        else if (res.status === 404)
+                            res.json().then((json) =>
+                                message.error(json.message)
+                            );
+                        else message.error(res.status + " " + res.statusText);
+                    })
+                    .then((json) => {
+                        message.success(json.message);
+                    })
+                    .finally(formik.resetForm);
             }}
         >
             {(formik) => (
