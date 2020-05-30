@@ -1,74 +1,38 @@
 import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+
 import { GlobalStyle } from "./components/GlobalLayout";
-import { Layout2 } from "./components/Layout";
+import { SiteLayout } from "./components/Layout";
 import { DashboardPage } from "./pages/dashboard/DashboardPage";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { RecipePage } from "./pages/recipe/RecipePage";
-import { Menu, Layout } from "antd";
 import { IngredientPage } from "./pages/ingredient/IngredientPage";
 import { RecipeContextProvider } from "./contexts/RecipeContext";
 
 export const App: React.FC = () => {
     return (
-        <>
+        <BrowserRouter>
             <GlobalStyle />
-            <Layout>
-                <Layout.Header style={{ backgroundColor: "white" }}>
-                    <div style={{ float: "left", marginRight: "12rem" }}>
-                        Cookbook
-                    </div>
-                    <Menu
-                        mode="horizontal"
-                        theme={"light"}
-                        defaultSelectedKeys={["Dashboard", "Ingredient"]}
-                    >
-                        <Menu.Item
-                            onClick={() => {
-                                window.location.href = "/";
-                            }}
-                            key="Dashboard"
-                        >
-                            Home
-                        </Menu.Item>
-                        <Menu.Item
-                            onClick={() => {
-                                window.location.href = "/ingredient";
-                            }}
-                            key="Ingredient"
-                        >
-                            Ingredients
-                        </Menu.Item>
-                    </Menu>
-                </Layout.Header>
-                <Layout2>
-                    <Layout.Content style={{ width: "100%" }}>
-                        <BrowserRouter>
-                            <Switch>
-                                <Route path="/recipe/:recipeId">
-                                    {(props) => {
-                                        return (
-                                            <RecipeContextProvider
-                                                recipeId={
-                                                    props.match?.params.recipeId
-                                                }
-                                            >
-                                                <RecipePage />
-                                            </RecipeContextProvider>
-                                        );
-                                    }}
-                                </Route>
-                                <Route path="/ingredient">
-                                    <IngredientPage />
-                                </Route>
-                                <Route path="/">
-                                    <DashboardPage />
-                                </Route>
-                            </Switch>
-                        </BrowserRouter>
-                    </Layout.Content>
-                </Layout2>
-                <Layout.Footer>Test</Layout.Footer>
-            </Layout>
-        </>
+            <SiteLayout>
+                <Switch>
+                    <Route path="/recipe/:recipeId">
+                        {(props) => {
+                            return (
+                                <RecipeContextProvider
+                                    recipeId={props.match?.params.recipeId}
+                                >
+                                    <RecipePage />
+                                </RecipeContextProvider>
+                            );
+                        }}
+                    </Route>
+                    <Route path="/ingredient">
+                        <IngredientPage />
+                    </Route>
+                    <Route path="/">
+                        <DashboardPage />
+                    </Route>
+                </Switch>
+            </SiteLayout>
+        </BrowserRouter>
     );
 };
