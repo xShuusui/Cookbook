@@ -12,6 +12,7 @@ const CustomDiv = styled.div`
     padding: 8px;
 `;
 
+/** A select which shows all ingredients and can create a new ingredient. */
 export const IngredientSelect: React.FC = () => {
     const { Option } = Select;
 
@@ -30,7 +31,7 @@ export const IngredientSelect: React.FC = () => {
         })
             .then((res) => {
                 if (res.status === 200) return res.json();
-                else if (res.status === 400)
+                else if (res.status === 400 || res.status === 404)
                     res.json().then((json) => message.error(json.message));
                 else message.error(res.status + " " + res.statusText);
             })

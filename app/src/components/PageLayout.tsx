@@ -3,6 +3,7 @@ import { Redirect } from "react-router";
 import { Layout, Menu } from "antd";
 import styled from "styled-components";
 
+/** The main layout of all pages. */
 export const PageLayout: React.FC = ({ children }) => {
     const { Header, Content, Footer } = Layout;
     const [switchPage, setSwitchPage] = useState<boolean>(false);

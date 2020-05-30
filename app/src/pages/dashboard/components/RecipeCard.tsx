@@ -6,11 +6,13 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Recipe } from "../../../types/Types";
 import { confirmModal } from "../../../components/ConfirmModal";
 
+/** The type for the recipe card. */
 type RecipeCardProps = {
     recipe: Recipe;
     refetchData: () => void;
 };
 
+/** A card that shows recipe data. */
 export const RecipeCard: React.FC<RecipeCardProps> = ({
     recipe: {
         recipeId,

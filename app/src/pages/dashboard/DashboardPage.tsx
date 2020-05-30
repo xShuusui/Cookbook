@@ -5,10 +5,10 @@ import { DashboardHeader } from "./components/DashboardHeader";
 import { IngredientModal } from "./components/IngredientModal";
 import { RecipeModal } from "./components/RecipeModal";
 import { RecipeCard } from "./components/RecipeCard";
-
 import { useGetHook } from "../../hooks/UseGetHook";
 import { Recipe } from "../../types/Types";
 
+/** The main react component for the dashboard page. */
 export const DashboardPage: React.FC = () => {
     const [showRecipeModal, setShowRecipeModal] = useState<boolean>(false);
     const [showIngredientModal, setShowIngredientModal] = useState<boolean>(
@@ -18,9 +18,9 @@ export const DashboardPage: React.FC = () => {
 
     const [sortBy, setSortBy] = useState<string | undefined>(undefined);
     const [filterByIngredient, setFilterByIngredient] = useState<string>("");
-
     const [filterByRating, setFilerByRating] = useState<number[]>([]);
 
+    // Build the ratingQuery for the backend.
     let ratingQuery: string = "";
     filterByRating.forEach((element) => {
         ratingQuery = ratingQuery + element + ",";

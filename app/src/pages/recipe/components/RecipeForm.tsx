@@ -7,6 +7,7 @@ import * as Yup from "yup";
 
 import { RecipeContext } from "../../../contexts/RecipeContext";
 
+/** The validation schema for the recipe form. */
 const RecipeFormSchema = Yup.object().shape({
     name: Yup.string().required("Name is required!"),
     instructions: Yup.string().required("Instructions are required!"),
@@ -16,6 +17,7 @@ const RecipeFormSchema = Yup.object().shape({
         .required("Rating is required!"),
 });
 
+/** A form to edit a recipe.  */
 export const RecipeForm: React.FC = () => {
     const [enableEdit, setEnableEdit] = useState<boolean>(false);
     const [name, setName] = useState<string>("");
@@ -46,7 +48,7 @@ export const RecipeForm: React.FC = () => {
                 })
                     .then((res) => {
                         if (res.status === 200) return res.json();
-                        else if (res.status === 404)
+                        else if (res.status === 400 || res.status === 404)
                             res.json().then((json) =>
                                 message.error(json.message)
                             );

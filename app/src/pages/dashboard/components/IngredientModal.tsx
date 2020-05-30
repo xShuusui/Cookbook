@@ -3,8 +3,10 @@ import { Modal, message } from "antd";
 import { Formik } from "formik";
 import { Form, SubmitButton, InputNumber, Select } from "formik-antd";
 import * as Yup from "yup";
+
 import { IngredientSelect } from "../../../components/IngredientSelect";
 
+/** The validation schema fot the ingredient modal. */
 const IngredientModalSchema = Yup.object().shape({
     ingredientId: Yup.string().required("Ingredient is required."),
     amount: Yup.number()
@@ -13,6 +15,7 @@ const IngredientModalSchema = Yup.object().shape({
     unit: Yup.string().required("Unit is required!"),
 });
 
+/** The type for the ingredient modal. */
 type IngredientModalProps = {
     showIngredientModal: boolean;
     setShowIngredientModal: (showIngredientModal: boolean) => void;
@@ -20,6 +23,7 @@ type IngredientModalProps = {
     refetchData: () => void;
 };
 
+/** A modal to add ingredients to a recipe. */
 export const IngredientModal: React.FC<IngredientModalProps> = ({
     showIngredientModal,
     setShowIngredientModal,
@@ -42,14 +46,12 @@ export const IngredientModal: React.FC<IngredientModalProps> = ({
                     }
                 )
                     .then((res) => {
-                        if (res.status === 200) {
-                            return res.json();
-                        } else {
-                            message.error(res.status + " " + res.statusText);
-                            message.error(
-                                "Ingredient is already in the recipe!"
+                        if (res.status === 200) return res.json();
+                        else if (res.status === 400 || res.status === 404)
+                            res.json().then((json) =>
+                                message.error(json.message)
                             );
-                        }
+                        else message.error(res.status + " " + res.statusText);
                     })
                     .then((json) => {
                         message.success(json.message);

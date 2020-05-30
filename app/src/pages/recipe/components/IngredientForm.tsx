@@ -8,6 +8,7 @@ import { IngredientSelect } from "../../../components/IngredientSelect";
 import { IngredientItem } from "./IngredientItem";
 import { RecipeContext } from "../../../contexts/RecipeContext";
 
+/** The validation schema for the ingredient form. */
 const IngredientFormSchema = Yup.object().shape({
     ingredientId: Yup.string().required("Ingredient is required!"),
     amount: Yup.number()
@@ -16,6 +17,7 @@ const IngredientFormSchema = Yup.object().shape({
     unit: Yup.string().required("Unit is required!"),
 });
 
+/** A form to add an ingredient to a recipe. */
 export const IngredientForm: React.FC = () => {
     const { Recipe, refetchData } = useContext(RecipeContext);
 
@@ -43,7 +45,7 @@ export const IngredientForm: React.FC = () => {
                 )
                     .then((res) => {
                         if (res.status === 200) return res.json();
-                        else if (res.status === 404)
+                        else if (res.status === 400 || res.status === 404)
                             res.json().then((json) =>
                                 message.error(json.message)
                             );

@@ -8,13 +8,14 @@ import { RecipePage } from "./pages/recipe/RecipePage";
 import { IngredientPage } from "./pages/ingredient/IngredientPage";
 import { RecipeContextProvider } from "./contexts/RecipeContext";
 
+/** The appliaction that contains the style and the routes. */
 export const App: React.FC = () => {
     return (
         <BrowserRouter>
             <GlobalStyle />
             <PageLayout>
                 <Switch>
-                    <Route path="/recipe/:recipeId">
+                    <Route exact path="/recipe/:recipeId">
                         {(props) => (
                             <RecipeContextProvider
                                 recipeId={props.match?.params.recipeId}
@@ -23,10 +24,10 @@ export const App: React.FC = () => {
                             </RecipeContextProvider>
                         )}
                     </Route>
-                    <Route path="/ingredient">
+                    <Route exact path="/ingredient">
                         <IngredientPage />
                     </Route>
-                    <Route path="/">
+                    <Route exact path="/">
                         <DashboardPage />
                     </Route>
                 </Switch>

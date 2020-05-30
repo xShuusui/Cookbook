@@ -7,6 +7,7 @@ import { RecipeForm } from "./components/RecipeForm";
 import { IngredientForm } from "./components/IngredientForm";
 import { RecipeContext } from "../../contexts/RecipeContext";
 
+/** The main react component for the recipe page. */
 export const RecipePage: React.FC = () => {
     const [redirect, setRedirect] = useState<boolean>(false);
     const { Recipe } = useContext(RecipeContext);

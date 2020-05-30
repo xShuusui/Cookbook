@@ -1,7 +1,8 @@
 import React from "react";
-import { Space, Button, PageHeader, Input, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { Space, Button, PageHeader, Input, Select } from "antd";
 
+/** The type of the dashboard header. */
 type DashboardHeaderProps = {
     setSortBy: (sortBy: string) => void;
     filterByIngredient: string;
@@ -11,6 +12,7 @@ type DashboardHeaderProps = {
     setShowModal: (showModal: boolean) => void;
 };
 
+/** The header for the dashboard page. */
 export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     setSortBy,
     filterByIngredient,

@@ -1,3 +1,4 @@
+/** A type that represents a recipe from the database. */
 export type Recipe = {
     recipeId: string;
     name: string;
@@ -11,6 +12,7 @@ export type Recipe = {
     updatedAt: Date;
 };
 
+/** A type that represents a recipeIngredient from the database. */
 export type RecipeIngredient = {
     recipeIngredientId: string;
     amount: number;
@@ -21,6 +23,7 @@ export type RecipeIngredient = {
     ingredient: Ingredient;
 };
 
+/** A type that represents an ingredient from the database. */
 export type Ingredient = {
     ingredientId: string;
     name: string;

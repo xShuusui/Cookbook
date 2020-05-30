@@ -5,6 +5,7 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Ingredient } from "../../../types/Types";
 import { confirmModal } from "../../../components/ConfirmModal";
 
+/** the type for the ingredient card. */
 type IngredientCardProps = {
     ingredient: Ingredient;
     refetchData: () => void;
@@ -12,6 +13,7 @@ type IngredientCardProps = {
     setIngredientId: (ingredientId: string) => void;
 };
 
+/** A card that shows ingredient data. */
 export const IngredientCard: React.FC<IngredientCardProps> = ({
     ingredient: { ingredientId, name, createdAt, updatedAt },
     refetchData,

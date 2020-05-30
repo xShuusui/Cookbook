@@ -15,20 +15,19 @@ const RecipeIngredientItem = styled.div`
     display: flex;
     align-items: center;
 `;
-
 const NameSpan = styled.span`
     flex: 2;
 `;
 const AmountUnitSpan = styled.span`
     flex: 2;
 `;
-
 const ButtonSpan = styled.span`
     flex: 1;
     display: flex;
     justify-content: space-between;
 `;
 
+/** The validation schema for the ingredient item. */
 const IngredientItemSchema = Yup.object().shape({
     amount: Yup.number()
         .min(0, "Amount is too short!")
@@ -36,10 +35,12 @@ const IngredientItemSchema = Yup.object().shape({
     unit: Yup.string().required("Unit is required!"),
 });
 
+/** The type for the ingredient item. */
 type IngredientItemProps = {
     recipeIngredient: RecipeIngredient;
 };
 
+/** To show, edit and delete an ingredient in a recipe.  */
 export const IngredientItem: React.FC<IngredientItemProps> = ({
     recipeIngredient,
 }) => {

@@ -4,10 +4,12 @@ import { Form, Input, SubmitButton } from "formik-antd";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
+/** The validation schema for the edit modal. */
 const EditModalSchema = Yup.object().shape({
     name: Yup.string().required("Name is required!"),
 });
 
+/** The type for the edit modal. */
 type EditModalProps = {
     showEditModal: boolean;
     setShowEditModal: (showEditModal: boolean) => void;
@@ -15,6 +17,7 @@ type EditModalProps = {
     refetchData: () => void;
 };
 
+/** A modal to edit an ingredient. */
 export const EditModal: React.FC<EditModalProps> = ({
     showEditModal,
     setShowEditModal,
@@ -32,14 +35,12 @@ export const EditModal: React.FC<EditModalProps> = ({
                     body: JSON.stringify(values),
                 })
                     .then((res) => {
-                        if (res.status === 200) {
-                            return res.json();
-                        } else {
-                            message.error(res.status + " " + res.statusText);
-                            message.error(
-                                "Ingredient with this name already exist!"
+                        if (res.status === 200) return res.json();
+                        else if (res.status === 400 || res.status === 404)
+                            res.json().then((json) =>
+                                message.error(json.message)
                             );
-                        }
+                        else message.error(res.status + " " + res.statusText);
                     })
                     .then((json) => {
                         message.success(json.message);

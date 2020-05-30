@@ -8,6 +8,7 @@ import {
 
 import { RecipeContext } from "../../../contexts/RecipeContext";
 
+/** The header of the recipe page. */
 export const RecipeHeader: React.FC<{
     setRedirect: (redirect: boolean) => void;
 }> = ({ setRedirect }) => {
@@ -45,15 +46,21 @@ export const RecipeHeader: React.FC<{
                                     },
                                 })
                                     .then((res) => {
-                                        if (res.status === 200) {
+                                        if (res.status === 200)
                                             return res.json();
-                                        } else {
+                                        else if (
+                                            res.status === 400 ||
+                                            res.status === 404
+                                        )
+                                            res.json().then((json) =>
+                                                message.error(json.message)
+                                            );
+                                        else
                                             message.error(
                                                 res.status +
                                                     " " +
                                                     res.statusText
                                             );
-                                        }
                                     })
                                     .then((json) => {
                                         message.success(json.message);

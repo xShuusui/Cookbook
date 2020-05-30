@@ -8,6 +8,7 @@ import { EditModal } from "./components/EditModal";
 import { useGetHook } from "../../hooks/UseGetHook";
 import { Ingredient } from "../../types/Types";
 
+/** The main react component for the ingredient page. */
 export const IngredientPage: React.FC = () => {
     const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
     const [showEditModal, setShowEditModal] = useState<boolean>(false);

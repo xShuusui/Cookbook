@@ -4,6 +4,7 @@ import { Form, Input, Rate, SubmitButton } from "formik-antd";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
+/** The validation schema for the recipe modal. */
 const RecipeModalSchema = Yup.object().shape({
     name: Yup.string().required("Name is required!"),
     instructions: Yup.string().required("Instructions are required!"),
@@ -13,6 +14,7 @@ const RecipeModalSchema = Yup.object().shape({
         .required("Rating is required!"),
 });
 
+/** The type for the recipe modal. */
 type RecipeModalProps = {
     showRecipeModal: boolean;
     setShowRecipeModal: (showRecipeModal: boolean) => void;
@@ -21,6 +23,7 @@ type RecipeModalProps = {
     refetchData: () => void;
 };
 
+/** A modal to create recipes. */
 export const RecipeModal: React.FC<RecipeModalProps> = ({
     showRecipeModal,
     setShowRecipeModal,
@@ -39,11 +42,12 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({
                     body: JSON.stringify(values),
                 })
                     .then((res) => {
-                        if (res.status === 200) {
-                            return res.json();
-                        } else {
-                            message.error(res.status + " " + res.statusText);
-                        }
+                        if (res.status === 200) return res.json();
+                        else if (res.status === 400 || res.status === 404)
+                            res.json().then((json) =>
+                                message.error(json.message)
+                            );
+                        else message.error(res.status + " " + res.statusText);
                     })
                     .then((json) => {
                         message.success(json.message);
