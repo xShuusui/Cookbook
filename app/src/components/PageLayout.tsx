@@ -1,23 +1,18 @@
 import React, { useState } from "react";
-import styled, { css } from "styled-components";
-import { Layout, Menu } from "antd";
 import { Redirect } from "react-router";
+import { Layout, Menu } from "antd";
+import styled from "styled-components";
 
-export const SiteLayout: React.FC = ({ children }) => {
+export const PageLayout: React.FC = ({ children }) => {
     const { Header, Content, Footer } = Layout;
     const [switchPage, setSwitchPage] = useState<boolean>(false);
 
-    const headerHeight = "85px";
-    const footerHeight = "50px";
-
-    const MaxWidthCSS = css`
-        max-width: 80rem;
-        margin: auto;
-    `;
-
-    const Main = styled.main`
-        min-height: calc(100vh - ${headerHeight} - ${footerHeight});
-        ${MaxWidthCSS}
+    const Logo = styled.div`
+        float: left;
+        margin-right: 8rem;
+        font-size: 24px;
+        letter-spacing: 3px;
+        text-decoration: underline;
     `;
 
     return (
@@ -27,14 +22,12 @@ export const SiteLayout: React.FC = ({ children }) => {
             ) : (
                 <Redirect to={"/ingredient"} />
             )}
-            <Header style={{ backgroundColor: "white" }}>
-                <div style={{ float: "left", marginRight: "12rem" }}>
-                    Cookbook
-                </div>
+            <Header style={{ backgroundColor: "#e6e6e6" }}>
+                <Logo>Cookbook</Logo>
                 <Menu
                     mode="horizontal"
-                    theme={"light"}
                     defaultSelectedKeys={["Dashboard"]}
+                    style={{ backgroundColor: "#e6e6e6" }}
                 >
                     <Menu.Item
                         onClick={() => setSwitchPage(false)}
@@ -42,7 +35,6 @@ export const SiteLayout: React.FC = ({ children }) => {
                     >
                         Home
                     </Menu.Item>
-
                     <Menu.Item
                         onClick={() => setSwitchPage(true)}
                         key="Ingredients"
@@ -51,13 +43,18 @@ export const SiteLayout: React.FC = ({ children }) => {
                     </Menu.Item>
                 </Menu>
             </Header>
-            <Content>
-                <Main>{children}</Main>
+            <Content
+                style={{
+                    maxWidth: "80rem",
+                    margin: "auto",
+                }}
+            >
+                {children}
             </Content>
             <Footer
                 style={{
                     textAlign: "center",
-                    backgroundColor: "lightgrey",
+                    backgroundColor: "#e6e6e6",
                 }}
             >
                 © 2020 by Julian Segeth
@@ -65,11 +62,3 @@ export const SiteLayout: React.FC = ({ children }) => {
         </>
     );
 };
-
-{
-    /* export const CustomLayout: React.FC = ({ children }) => {
- 
-
-    return <Main>{children}</Main>;
-}; */
-}

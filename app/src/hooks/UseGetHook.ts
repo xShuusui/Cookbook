@@ -4,7 +4,7 @@ import { message } from "antd";
 export function useGetHook<T>(
     url: string
 ): { data: T | null; fetchData: () => void } {
-    const [data, setData] = useState<T | null>(null); // Speichern der Variablen in einem State fürs rerendering();
+    const [data, setData] = useState<T | null>(null);
 
     const fetchData = () => {
         fetch(url, {
@@ -19,13 +19,13 @@ export function useGetHook<T>(
                 }
             })
             .then((json) => {
-                setData(json.data); // Triggert immer rerendering.
+                setData(json.data);
             });
     };
 
     useEffect(() => {
         fetchData();
-    }, [url]); //Immer wenn url ändert, wird useFetch neu ausgeführt.
+    }, [url]);
 
     return { data, fetchData };
 }

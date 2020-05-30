@@ -1,5 +1,5 @@
 import React from "react";
-import { Space, Button, PageHeader, Input, Slider, Select } from "antd";
+import { Space, Button, PageHeader, Input, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 type DashboardHeaderProps = {
