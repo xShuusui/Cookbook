@@ -1,8 +1,9 @@
 import React from "react";
-import { Card, Button, message } from "antd";
+import { Card, Button } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import { Ingredient } from "../../../types/Types";
+import { confirmModal } from "../../../components/ConfirmModal";
 
 type IngredientCardProps = {
     ingredient: Ingredient;
@@ -33,25 +34,12 @@ export const IngredientCard: React.FC<IngredientCardProps> = ({
             }
             actions={[
                 <DeleteOutlined
-                    onClick={() => {
-                        fetch("/api/ingredient/" + ingredientId, {
-                            method: "DELETE",
-                            headers: { "Content-Type": "application/json" },
-                        })
-                            .then((res) => {
-                                if (res.status === 200) {
-                                    return res.json();
-                                } else {
-                                    message.error(
-                                        res.status + " " + res.statusText
-                                    );
-                                }
-                            })
-                            .then((json) => {
-                                message.success(json.message);
-                                refetchData();
-                            });
-                    }}
+                    onClick={() =>
+                        confirmModal(
+                            "/api/ingredient/" + ingredientId,
+                            refetchData
+                        )
+                    }
                 />,
             ]}
         >

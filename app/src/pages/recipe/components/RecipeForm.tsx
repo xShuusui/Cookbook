@@ -38,11 +38,11 @@ export const RecipeForm: React.FC = () => {
             }}
             enableReinitialize={true}
             validationSchema={RecipeFormSchema}
-            onSubmit={({ name, instructions, rating }, formik) => {
+            onSubmit={(values, formik) => {
                 fetch("/api/recipe/" + Recipe?.recipeId, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name, instructions, rating }),
+                    body: JSON.stringify(values),
                 })
                     .then((res) => {
                         if (res.status === 200) return res.json();

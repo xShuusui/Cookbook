@@ -1,12 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
-import { RecipeIngredient } from "../../../types/Types";
-import styled from "styled-components";
-import { Button, message } from "antd";
 import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons";
-import { RecipeContext } from "../../../contexts/RecipeContext";
-import { Formik } from "formik";
+import { Button, message } from "antd";
 import { Form, InputNumber, Select, SubmitButton } from "formik-antd";
+import { Formik } from "formik";
 import * as Yup from "yup";
+import styled from "styled-components";
+
+import { RecipeContext } from "../../../contexts/RecipeContext";
+import { confirmModal } from "../../../components/ConfirmModal";
+import { RecipeIngredient } from "../../../types/Types";
 
 const RecipeIngredientItem = styled.div`
     margin: 5px;
@@ -56,33 +58,14 @@ export const IngredientItem: React.FC<IngredientItemProps> = ({
         setUnit(recipeIngredient.unit);
     }, [recipeIngredient]);
 
-    const onEditButtonClick = () => {};
-
     const onDeleteButtonClick = () => {
-        fetch(
+        confirmModal(
             "/api/recipe/" +
                 Recipe?.recipeId +
                 "/ingredient/" +
                 recipeIngredient.ingredient.ingredientId,
-            {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        )
-            .then((res) => {
-                if (res.status === 200) {
-                    return res.json();
-                } else {
-                    message.error(res.status + " " + res.statusText);
-                    res.json().then((json) => message.error(json.message));
-                }
-            })
-            .then((json) => {
-                message.success(json.message);
-                refetchData();
-            });
+            refetchData
+        );
     };
 
     return (

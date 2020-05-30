@@ -31,6 +31,7 @@ export const IngredientPage: React.FC = () => {
             />
             <PageHeader
                 title="Ingredients"
+                style={{ width: "80rem" }}
                 extra={
                     <Button
                         size="large"

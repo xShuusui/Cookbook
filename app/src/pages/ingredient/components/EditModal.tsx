@@ -25,11 +25,11 @@ export const EditModal: React.FC<EditModalProps> = ({
         <Formik
             initialValues={{ name: "" }}
             validationSchema={EditModalSchema}
-            onSubmit={({ name }, formik) => {
+            onSubmit={(values, formik) => {
                 fetch("/api/ingredient/" + ingredientId, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name }),
+                    body: JSON.stringify(values),
                 })
                     .then((res) => {
                         if (res.status === 200) {

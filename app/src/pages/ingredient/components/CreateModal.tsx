@@ -23,11 +23,11 @@ export const CreateModal: React.FC<CreateModalProps> = ({
         <Formik
             initialValues={{ name: "" }}
             validationSchema={CreateModalSchema}
-            onSubmit={({ name }, formik) => {
+            onSubmit={(values, formik) => {
                 fetch("/api/ingredient", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name }),
+                    body: JSON.stringify(values),
                 })
                     .then((res) => {
                         if (res.status === 200) {

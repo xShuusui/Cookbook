@@ -1,12 +1,18 @@
-import { PageHeader, Button } from "antd";
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import React from "react";
+import React, { useContext } from "react";
+import { PageHeader, Button, Modal, message } from "antd";
+import {
+    ArrowLeftOutlined,
+    DeleteOutlined,
+    ExclamationCircleOutlined,
+} from "@ant-design/icons";
 
-type RecipeHeaderProps = {
+import { RecipeContext } from "../../../contexts/RecipeContext";
+
+export const RecipeHeader: React.FC<{
     setRedirect: (redirect: boolean) => void;
-};
+}> = ({ setRedirect }) => {
+    const { Recipe } = useContext(RecipeContext);
 
-export const RecipeHeader: React.FC<RecipeHeaderProps> = ({ setRedirect }) => {
     return (
         <PageHeader
             style={{ width: "80rem" }}
@@ -18,6 +24,47 @@ export const RecipeHeader: React.FC<RecipeHeaderProps> = ({ setRedirect }) => {
                     icon={<ArrowLeftOutlined />}
                     shape="circle"
                 ></Button>
+            }
+            extra={
+                <Button
+                    size={"large"}
+                    icon={<DeleteOutlined />}
+                    onClick={() => {
+                        const { confirm } = Modal;
+
+                        confirm({
+                            title: "Are you sure you want to delete this item?",
+                            icon: <ExclamationCircleOutlined />,
+                            okText: "Yes",
+                            cancelText: "No",
+                            onOk() {
+                                fetch("/api/recipe/" + Recipe?.recipeId, {
+                                    method: "DELETE",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                })
+                                    .then((res) => {
+                                        if (res.status === 200) {
+                                            return res.json();
+                                        } else {
+                                            message.error(
+                                                res.status +
+                                                    " " +
+                                                    res.statusText
+                                            );
+                                        }
+                                    })
+                                    .then((json) => {
+                                        message.success(json.message);
+                                        setRedirect(true);
+                                    });
+                            },
+                        });
+                    }}
+                >
+                    Delete recipe
+                </Button>
             }
         />
     );

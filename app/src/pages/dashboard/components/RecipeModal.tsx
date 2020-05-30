@@ -32,11 +32,11 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({
         <Formik
             initialValues={{ name: "", instructions: "", rating: 0 }}
             validationSchema={RecipeModalSchema}
-            onSubmit={({ name, instructions, rating }, formik) => {
+            onSubmit={(values, formik) => {
                 fetch("/api/recipe", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name, instructions, rating }),
+                    body: JSON.stringify(values),
                 })
                     .then((res) => {
                         if (res.status === 200) {

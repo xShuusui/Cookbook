@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getRepository, Repository } from "typeorm";
 import { Recipe } from "../entity/recipe";
-import { validate, ValidationError } from "class-validator";
+import { validate, ValidationError, isIn } from "class-validator";
 import { Spoonacular } from "../module/spoonacular";
 
 /**
@@ -16,26 +16,34 @@ export class RecipeController {
      */
     public static async getRecipes(req: Request, res: Response): Promise<void> {
         const sortBy: string = req.query.sortBy.toString();
-        const filterBy: string = req.query.filterBy.toString();
+        const filterByIngredient: string = req.query.filterByIngredient.toString();
+        const filterByRating: string = req.query.filterByRating.toString();
+
+        const ratings: number[] = filterByRating.split(",").map(Number);
+        ratings.pop();
 
         let recipes: Recipe[] = await getRepository(Recipe).find({
             order: {
                 name: sortBy === "name" ? "ASC" : undefined,
-                rating: sortBy === "rating" ? "DESC" : undefined,
                 createdAt: sortBy === "newest" ? "DESC" : undefined,
+                updatedAt: sortBy === "lastedited" ? "DESC" : undefined,
+                rating: sortBy === "rating" ? "DESC" : undefined,
                 totalCalories: sortBy === "calories" ? "DESC" : undefined,
                 totalFat: sortBy === "fat" ? "DESC" : undefined,
             },
         });
 
-        if (filterBy) {
+        if (ratings.length > 0) {
+            recipes = recipes.filter((recipe) => isIn(recipe.rating, ratings));
+        }
+
+        if (filterByIngredient) {
             recipes = recipes.filter((recipe) => {
                 return (
                     recipe.ingredients.filter((rI) => {
-                        return (
-                            rI.ingredient.name.toUpperCase() ===
-                            filterBy.toUpperCase()
-                        );
+                        return rI.ingredient.name
+                            .toUpperCase()
+                            .startsWith(filterByIngredient.toUpperCase());
                     }).length > 0
                 );
             });

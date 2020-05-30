@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router";
-import { Card, Rate, message } from "antd";
+import { Card, Rate } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import { Recipe } from "../../../types/Types";
+import { confirmModal } from "../../../components/ConfirmModal";
 
 type RecipeCardProps = {
     recipe: Recipe;
@@ -35,29 +36,12 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
                     actions={[
                         <EditOutlined onClick={() => setRedirect(true)} />,
                         <DeleteOutlined
-                            onClick={() => {
-                                fetch("/api/recipe/" + recipeId, {
-                                    method: "DELETE",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                    },
-                                })
-                                    .then((res) => {
-                                        if (res.status === 200) {
-                                            return res.json();
-                                        } else {
-                                            message.error(
-                                                res.status +
-                                                    " " +
-                                                    res.statusText
-                                            );
-                                        }
-                                    })
-                                    .then((json) => {
-                                        message.success(json.message);
-                                        refetchData();
-                                    });
-                            }}
+                            onClick={() =>
+                                confirmModal(
+                                    "/api/recipe/" + recipeId,
+                                    refetchData
+                                )
+                            }
                         />,
                     ]}
                 >

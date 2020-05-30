@@ -17,9 +17,22 @@ export const DashboardPage: React.FC = () => {
     const [recipeId, setRecipeId] = useState<string>("");
 
     const [sortBy, setSortBy] = useState<string | undefined>(undefined);
-    const [filterBy, setFilterBy] = useState<string>("");
+    const [filterByIngredient, setFilterByIngredient] = useState<string>("");
+
+    const [filterByRating, setFilerByRating] = useState<number[]>([]);
+
+    let ratingQuery: string = "";
+    filterByRating.forEach((element) => {
+        ratingQuery = ratingQuery + element + ",";
+    });
+
     const { data, fetchData } = useGetHook<Recipe[]>(
-        "/api/recipe?sortBy=" + sortBy + "&filterBy=" + filterBy
+        "/api/recipe?sortBy=" +
+            sortBy +
+            "&filterByIngredient=" +
+            filterByIngredient +
+            "&filterByRating=" +
+            ratingQuery
     );
 
     return (
@@ -39,8 +52,10 @@ export const DashboardPage: React.FC = () => {
             />
             <DashboardHeader
                 setSortBy={setSortBy}
-                filterBy={filterBy}
-                setFilterBy={setFilterBy}
+                filterByIngredient={filterByIngredient}
+                setFilterByIngredient={setFilterByIngredient}
+                filterByRating={filterByRating}
+                setFilterByRating={setFilerByRating}
                 setShowModal={setShowRecipeModal}
             />
 

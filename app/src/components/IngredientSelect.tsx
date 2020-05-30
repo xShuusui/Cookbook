@@ -12,13 +12,7 @@ const CustomDiv = styled.div`
     padding: 8px;
 `;
 
-type IngredientSelectProps = {
-    enableInput?: boolean;
-};
-
-export const IngredientSelect: React.FC<IngredientSelectProps> = ({
-    enableInput,
-}) => {
+export const IngredientSelect: React.FC = () => {
     const { Option } = Select;
 
     const [ingredientName, setIngredientName] = useState<string>("");
