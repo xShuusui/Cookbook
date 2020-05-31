@@ -30,7 +30,7 @@ const ButtonSpan = styled.span`
 /** The validation schema for the ingredient item. */
 const IngredientItemSchema = Yup.object().shape({
     amount: Yup.number()
-        .min(0, "Amount is too short!")
+        .min(1, "Amount is too short!")
         .required("Amount is required!"),
     unit: Yup.string().required("Unit is required!"),
 });

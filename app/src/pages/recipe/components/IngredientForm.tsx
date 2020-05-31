@@ -12,7 +12,7 @@ import { RecipeContext } from "../../../contexts/RecipeContext";
 const IngredientFormSchema = Yup.object().shape({
     ingredientId: Yup.string().required("Ingredient is required!"),
     amount: Yup.number()
-        .min(0, "Amount is too short!")
+        .min(1, "Amount is too short!")
         .required("Amount is required!"),
     unit: Yup.string().required("Unit is required!"),
 });
