@@ -10,19 +10,45 @@
 
 This repository contains my cookbook app from the advanced web development homework.
 
-## Basic
+## Setup the system
+
+This app and api are fully dockerized, to get the system running you need to have `docker` version `19.0+` and `docker-compose` version `18.02.0+` installed on your system.
+
+First we need to pull all needed images with:
+
+```
+docker-compose build
+```
+
+Second we need to start all defined containers with:
+
+```
+docker-compose up
+```
+
+After all container are started, the app runs on port 3000.
+
+## Good to know
+
+Here are some features and useful information for this application.
 
 ### CSS Framework
 
 I have used ant design to design this website.
 
-### Semi-Responsive
+### Semi Responsive
+
+This website is responsive on tablets, laptops and computers, but not on smartphones.
 
 ### Extra Features
 
--   Unit
--   Success/Error messages
--   Sort by calories and fat
+#### Status messages
+
+When an user has successfully created, edited or deleted something, the app displays a success message that is sent from the api. When an 400 or 404 error occurs the app displays an error message that is sent from the api. All other errors that occur are displaying the status code and status text.
+
+#### Sort and filter by
+
+On the dashboard page you have a dropdown menu to sort all recipes by name, rating, calories, fat, newest and last edited. Also you can filter the recipes according to their ingredients and you have a select where you can select multiple ratings and filter after them.
 
 ## Pages
 
