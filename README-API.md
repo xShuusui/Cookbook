@@ -1,4 +1,4 @@
-# Cookbook API
+# Cookbook Api
 
 [![version](https://img.shields.io/badge/version-1.0.0-green?style=flat-square)](.)
 [![docker-compose](https://img.shields.io/badge/docker--compose-3.6-orange?style=flat-square)](https://docs.docker.com/compose/)

@@ -37,6 +37,10 @@ When an user has successfully created, edited or deleted something, the app disp
 
 On the dashboard page you have a dropdown menu to sort all recipes by name, rating, calories, fat, newest and last edited. You can filter the recipes according to their ingredients and additionally there is a dropdown menu where you can select multiple ratings and filter after them.
 
+#### Delete warnings
+
+When an user tries to delete a recipe, an ingredient or an ingredient inside a recipe a warning appears. This warning asks the user if he really want to delete the item. So you cant accidentally delete an important recipe, with all his data.
+
 ## Setup the System
 
 This app and api are fully dockerized, to get the system running you need to have `docker` version `19.0+` and `docker-compose` version `18.02.0+` installed on your system.
