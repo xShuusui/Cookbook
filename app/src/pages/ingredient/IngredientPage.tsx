@@ -32,7 +32,6 @@ export const IngredientPage: React.FC = () => {
             />
             <PageHeader
                 title="Ingredients"
-                style={{ width: "80rem" }}
                 extra={
                     <Button
                         size="large"
@@ -51,7 +50,12 @@ export const IngredientPage: React.FC = () => {
             ) : (
                 <Row gutter={[16, 16]}>
                     {data.map((ingredient) => (
-                        <Col span={8} key={ingredient.ingredientId}>
+                        <Col
+                            xs={24}
+                            lg={12}
+                            xl={8}
+                            key={ingredient.ingredientId}
+                        >
                             <IngredientCard
                                 ingredient={ingredient}
                                 refetchData={fetchData}

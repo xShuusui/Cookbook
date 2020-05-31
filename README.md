@@ -4,6 +4,7 @@
 [![docker-compose](https://img.shields.io/badge/docker--compose-3.6-orange?style=flat-square)](https://docs.docker.com/compose/)
 [![typescript](https://img.shields.io/badge/typescript-3.9.2-orange?style=flat-square)](https://www.typescriptlang.org/)
 [![react](https://img.shields.io/badge/react-16.13.1-orange?style=flat-square)](https://reactjs.org/)
+[![formik](https://img.shields.io/badge/formik-2.1.4-orange?style=flat-square)](https://jaredpalmer.com/formik/)
 [![api](https://img.shields.io/badge/api-cookbook-blue?style=flat-square)](https://code.fbi.h-da.de/istjusege/fwe-ss20-755304-ha1)
 [![Framework](https://img.shields.io/badge/framework-ant_design-blue.svg?style=flat-square)](https://ant.design/)
 [![License](https://img.shields.io/badge/License-MIT-brown.svg?style=flat-square)](LICENSE)
@@ -20,11 +21,11 @@ I have used a framwork called ant design to design this website.
 
 ### Semi Responsive
 
-This website is responsive on tablets, laptops and computers, but not on smartphones.
+This website is responsive on tablets, laptops and computers. The only component that is not responsive on smartphones is the menu.
 
 ### Form Handling
 
-To process the whole user input and for its validation i use formik with yup.
+To process the whole user input and for its validation i have used formik with yup.
 
 ### Extra Features
 

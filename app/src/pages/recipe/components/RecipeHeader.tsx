@@ -16,7 +16,6 @@ export const RecipeHeader: React.FC<{
 
     return (
         <PageHeader
-            style={{ width: "80rem" }}
             title={"Recipe"}
             onBack={() => setRedirect(true)}
             backIcon={

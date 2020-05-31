@@ -23,7 +23,11 @@ export const PageLayout: React.FC = ({ children }) => {
             ) : (
                 <Redirect to={"/ingredient"} />
             )}
-            <Header style={{ backgroundColor: "#e6e6e6" }}>
+            <Header
+                style={{
+                    backgroundColor: "#e6e6e6",
+                }}
+            >
                 <Logo>Cookbook</Logo>
                 <Menu
                     mode="horizontal"

@@ -23,10 +23,10 @@ export const RecipePage: React.FC = () => {
                         <Skeleton />
                     ) : (
                         <Row gutter={[16, 16]}>
-                            <Col span={14}>
+                            <Col xs={24} lg={14}>
                                 <RecipeForm />
                             </Col>
-                            <Col span={10}>
+                            <Col xs={24} lg={10}>
                                 <IngredientForm />
                             </Col>
                             <Col span={24}>

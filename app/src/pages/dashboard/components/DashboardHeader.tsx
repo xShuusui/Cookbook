@@ -1,6 +1,6 @@
 import React from "react";
 import { PlusOutlined } from "@ant-design/icons";
-import { Space, Button, PageHeader, Input, Select } from "antd";
+import { Space, Button, PageHeader, Input, Select, Col, Row } from "antd";
 
 /** The type of the dashboard header. */
 type DashboardHeaderProps = {
@@ -26,7 +26,6 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     return (
         <PageHeader
             title="Dashboard"
-            style={{ width: "80rem" }}
             extra={
                 <Button
                     size="large"
@@ -37,47 +36,51 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 </Button>
             }
         >
-            <Space size={"large"}>
-                <Space>
-                    Sort by:
-                    <Select
-                        placeholder={"Select ..."}
-                        style={{ width: "200px" }}
-                        onSelect={(e: string) => setSortBy(e)}
-                    >
-                        <Option value={"name"}>Name</Option>
-                        <Option value={"rating"}>Rating</Option>
-                        <Option value={"newest"}>Newest</Option>
-                        <Option value={"lastedited"}>Last Edited</Option>
-                        <Option value={"calories"}>Calories</Option>
-                        <Option value={"fat"}>Fat</Option>
-                    </Select>
-                </Space>
-                <Space>
-                    Filter by:
-                    <Input
-                        placeholder="Ingredient"
-                        style={{ width: "200px" }}
-                        value={filterByIngredient}
-                        onChange={(e) =>
-                            setFilterByIngredient(e.currentTarget.value)
-                        }
-                    />
-                    <Select
-                        placeholder={"Rating"}
-                        style={{ width: "200px" }}
-                        mode={"multiple"}
-                        onChange={(e: number[]) => setFilterByRating(e)}
-                    >
-                        <Option value={0}>0 - Stars</Option>
-                        <Option value={1}>1 - Stars</Option>
-                        <Option value={2}>2 - Stars</Option>
-                        <Option value={3}>3 - Stars</Option>
-                        <Option value={4}>4 - Stars</Option>
-                        <Option value={5}>5 - Stars</Option>
-                    </Select>
-                </Space>
-            </Space>
+            <Row gutter={[8, 8]}>
+                <Col xl={6}>
+                    <Space>
+                        Sort by:
+                        <Select
+                            placeholder={"Select ..."}
+                            style={{ width: "200px" }}
+                            onSelect={(e: string) => setSortBy(e)}
+                        >
+                            <Option value={"name"}>Name</Option>
+                            <Option value={"rating"}>Rating</Option>
+                            <Option value={"newest"}>Newest</Option>
+                            <Option value={"lastedited"}>Last Edited</Option>
+                            <Option value={"calories"}>Calories</Option>
+                            <Option value={"fat"}>Fat</Option>
+                        </Select>
+                    </Space>
+                </Col>
+                <Col xl={10}>
+                    <Space>
+                        Filter by:
+                        <Input
+                            placeholder="Ingredient"
+                            style={{ width: "200px" }}
+                            value={filterByIngredient}
+                            onChange={(e) =>
+                                setFilterByIngredient(e.currentTarget.value)
+                            }
+                        />
+                        <Select
+                            placeholder={"Rating"}
+                            style={{ width: "200px" }}
+                            mode={"multiple"}
+                            onChange={(e: number[]) => setFilterByRating(e)}
+                        >
+                            <Option value={0}>0 - Stars</Option>
+                            <Option value={1}>1 - Stars</Option>
+                            <Option value={2}>2 - Stars</Option>
+                            <Option value={3}>3 - Stars</Option>
+                            <Option value={4}>4 - Stars</Option>
+                            <Option value={5}>5 - Stars</Option>
+                        </Select>
+                    </Space>
+                </Col>
+            </Row>
         </PageHeader>
     );
 };

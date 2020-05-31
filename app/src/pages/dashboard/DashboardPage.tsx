@@ -66,7 +66,7 @@ export const DashboardPage: React.FC = () => {
             ) : (
                 <Row gutter={[16, 16]}>
                     {data.map((recipe) => (
-                        <Col span={8} key={recipe.recipeId}>
+                        <Col xs={24} lg={12} xl={8} key={recipe.recipeId}>
                             <RecipeCard
                                 recipe={recipe}
                                 refetchData={fetchData}
