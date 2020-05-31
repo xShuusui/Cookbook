@@ -15,7 +15,7 @@ This repository contains my cookbook api from the advanced web development homew
 
 The Cookbook API is a REST API, where you can create different recipes and ingredients. Also you can assigne ingredients to different recipes. The whole Cookbook API is dockerized, it stores its data in a MySQL database using TypeORM, which is also dockerized. To communicate with this API you can use a REST interface.
 
-### Basic
+### Basics
 
 #### Recipe
 
@@ -27,7 +27,7 @@ An ingredient has a name.
 
 #### RecipeIngredient
 
-A recipeIngredient is the connection between a recipe and an ingredient, it has an amount and an unit. Also it gets calories and fat from the given ingredient data from an external api.
+A recipeIngredient is the connection between a recipe and an ingredient, it has an amount and an unit. The unit can be: g, kg, ml, l, cup, teaspoon or tablespoon. Also it gets calories and fat from the given ingredient data from an external api.
 
 ### External APIs
 
@@ -45,7 +45,11 @@ Warning: The food jokes are 18+!
 
 This api can only be called 150 times per day.
 
-## Setup the system
+### Docker Secrets
+
+I used docker secrets to manage all key files and transmit them into the docker container. I dont store unencrypted keys in any of my source code. I save all key files in one key folder, which i unfortunately must upload.
+
+## Setup the System
 
 This api is fully dockerized, to get the system running you need to have `docker` version `19.0+` and `docker-compose` version `18.02.0+` installed on your system.
 

@@ -8,9 +8,35 @@
 [![Framework](https://img.shields.io/badge/framework-ant_design-blue.svg?style=flat-square)](https://ant.design/)
 [![License](https://img.shields.io/badge/License-MIT-brown.svg?style=flat-square)](LICENSE)
 
-This repository contains my cookbook app from the advanced web development homework.
+This repository contains my cookbook app and the extended cookbook api from the advanced web development homework.
 
-## Setup the system
+## Good to Know
+
+Here are some useful information and features of this application.
+
+### CSS Framework
+
+I have used a framwork called ant design to design this website.
+
+### Semi Responsive
+
+This website is responsive on tablets, laptops and computers, but not on smartphones.
+
+### Form Handling
+
+To process the whole user input and for its validation i use formik with yup.
+
+### Extra Features
+
+#### Status messages
+
+When an user has successfully created, edited or deleted something, the app displays a success message that is sent from the api. When an 400 or 404 error occurs the app displays an error message that is sent from the api. For all other errors that occur the status code and the status text are displayed.
+
+#### Sort and filter by
+
+On the dashboard page you have a dropdown menu to sort all recipes by name, rating, calories, fat, newest and last edited. You can filter the recipes according to their ingredients and additionally there is a dropdown menu where you can select multiple ratings and filter after them.
+
+## Setup the System
 
 This app and api are fully dockerized, to get the system running you need to have `docker` version `19.0+` and `docker-compose` version `18.02.0+` installed on your system.
 
@@ -28,28 +54,6 @@ docker-compose up
 
 After all container are started, the app runs on port 3000.
 
-## Good to know
-
-Here are some features and useful information for this application.
-
-### CSS Framework
-
-I have used ant design to design this website.
-
-### Semi Responsive
-
-This website is responsive on tablets, laptops and computers, but not on smartphones.
-
-### Extra Features
-
-#### Status messages
-
-When an user has successfully created, edited or deleted something, the app displays a success message that is sent from the api. When an 400 or 404 error occurs the app displays an error message that is sent from the api. All other errors that occur are displaying the status code and status text.
-
-#### Sort and filter by
-
-On the dashboard page you have a dropdown menu to sort all recipes by name, rating, calories, fat, newest and last edited. Also you can filter the recipes according to their ingredients and you have a select where you can select multiple ratings and filter after them.
-
 ## Pages
 
 Here you can find detailed descriptions for each page in this app.
@@ -58,20 +62,21 @@ Here you can find detailed descriptions for each page in this app.
 
 **Accessible over ("/")**
 
-The dashboard is the main page of this app. It lists all recipes with their rating, calories and fat. Also it shows the created and updated time of the recipe. Each recipe has an edit button, from where you come to the detailed recipe page and a delete button. At the top of the dashboard is a toolbar, there you can create a new recipe, and imediatly add ingredients too it. If the ingredient does not exist you can create it during the recipe creation. In the toolbar you can sort the recipes for a specific field and filter them for a specific ingredient or multiple ratings.
+The dashboard is the main page of this app. It lists all recipes with their rating, calories and fat. Also it shows the created and updated time of the recipe. Each recipe has an edit button, from where you come to the detailed recipe page and a delete button to delete the recipe. At the top of the dashboard is a toolbar, there you can create a new recipe, and immediatly add ingredients to it. If the ingredient does not exist you can create it during the recipe creation. In the toolbar you can sort the recipes according to a specific field and filter them for a specific ingredient or multiple ratings.
 
 ### Detailed Recipe Page
 
 **Accessible over ("/recipe/:recipeId")**
 
-You can press the edit button of an recipe in the dashboard to come here. On the recipe page you can edit the recipe. In one section you can edit the name, instructions and the rating. In an other section you can edit the ingredients inside the recipe or delete them. Also you can add new ingredients to the recipe with an amount and an unit. When your ingredient does not exist, you can directly create it.
-On the bottem you can see the calories and fat from the whole recipe, besides a joke.
+You need to press the edit button of an recipe in the dashboard to come here. On the recipe page you can edit the recipe. In one section you can edit the name, the cooking instructions and the rating. In an other section you can edit the ingredients inside the recipe or delete them. Also you can add new ingredients to the recipe with an amount and an unit. When your ingredient does not exist, you can directly create it.
+At the top of the page is a button that you can use to delete the current recipe and it redirect you immediatly to the dashboard page.
+On the bottem of the page you can see the calories and fat from the whole recipe, with a funny food joke.
 
 ### Ingredient Page
 
 **Accessible over ("/ingredient")**
 
-The ingredient page shows all existing ingredients with their created and updated time. Here you can delete ingredients, edit ingredients and create new ingredients.
+The ingredient page shows all existing ingredients with their created and updated time. To geht their you must be click in the menu on "Ingredients". Each ingredient has an edit button where you can change its name. Also it has an delete button to delete the ingredient and deletes it from all recipes it is in. At the top of the page is a create button, their you can create a new ingredient.
 
 ## License
 
